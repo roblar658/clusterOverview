@@ -4,3 +4,6 @@
 *.log
 bingo_2024_rapport.pdf
 clusterOverview_rapport_*.pdf
+wix/out/
+*.msi
+*.wixpdb

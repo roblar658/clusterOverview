@@ -1,0 +1,142 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+
+  <Package Name="ClusterOverview"
+           Manufacturer="Robert Larsen"
+           Version="1.0.0.0"
+           UpgradeCode="8E3B5D41-7C1A-4A5E-9A74-2F6C9E01B8D4"
+           Language="1033"
+           Compressed="yes"
+           InstallerVersion="500"
+           Scope="perMachine">
+
+    <SummaryInformation Description="ClusterOverview — 200 klyngealgoritmer og vektor-PDF (Native Rust)"
+                        Manufacturer="Robert Larsen"
+                        Keywords="Clustering, Data Analysis, Rust, PDF, ClusterOverview" />
+
+    <MajorUpgrade DowngradeErrorMessage="En nyere versjon av [ProductName] er allerede installert." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <!-- Application Icon and Add/Remove Programs Metadata -->
+    <Icon Id="AppIcon.ico" SourceFile="wix\clusterOverview.ico" />
+    <Property Id="ARPPRODUCTICON" Value="AppIcon.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/roblar658/clusterOverview" />
+    <Property Id="ARPHELPLINK" Value="https://github.com/roblar658/clusterOverview" />
+    <Property Id="ARPCONTACT" Value="Robert Larsen" />
+    <Property Id="ARPCOMMENTS" Value="Copyright (c) 2026 Robert Larsen. 200 clustering algorithms and vector PDF reports in native Rust." />
+
+    <!-- WiX v4 InstallDir UI with MIT License (Copyright Robert Larsen) -->
+    <WixVariable Id="WixUILicenseRtf" Value="wix\License.rtf" />
+    <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+
+    <!-- Directory Layout -->
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="ClusterOverview">
+        <Directory Id="SampleDataFolder" Name="sample_data" />
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="ClusterOverview" />
+    </StandardDirectory>
+
+    <StandardDirectory Id="DesktopFolder" />
+
+    <!-- Installed Files -->
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="MainExecutable" Guid="B729E26F-6A38-4D9C-B1F2-5B17E9042C11">
+        <File Id="ClusterOverviewExe"
+              Name="cluster_overview.exe"
+              Source="$(var.BinPath)"
+              KeyPath="yes" />
+      </Component>
+
+      <Component Id="LicenseFile" Guid="C4A84E32-2F19-4E88-A61D-91D54C3E0B22">
+        <File Id="LicenseTxt"
+              Name="LICENSE"
+              Source="LICENSE"
+              KeyPath="yes" />
+      </Component>
+
+      <Component Id="ReadmeFile" Guid="D19C7B54-8E61-4F2A-8C3E-72A6F1845D33">
+        <File Id="ReadmeMd"
+              Name="README.md"
+              Source="README.md"
+              KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Sample CSV Data Files -->
+    <ComponentGroup Id="SampleDataComponents" Directory="SampleDataFolder">
+      <Component Id="SampleIrisCsv" Guid="E63F91A2-5D40-4B1C-97E8-44C02A916E44">
+        <File Id="IrisDemoCsv"
+              Name="iris_demo.csv"
+              Source="sample_data\iris_demo.csv"
+              KeyPath="yes" />
+      </Component>
+
+      <Component Id="SampleCustomersCsv" Guid="F81D42C3-9B52-4C7D-8A19-63E15B027F55">
+        <File Id="CustomersMixedCsv"
+              Name="customers_mixed.csv"
+              Source="sample_data\customers_mixed.csv"
+              KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Start Menu & Desktop Shortcuts (HKCU KeyPath for full ICE38/ICE43 compliance) -->
+    <ComponentGroup Id="ShortcutComponents">
+      <Component Id="StartMenuShortcuts"
+                 Directory="ApplicationProgramsFolder"
+                 Guid="A12E6B84-3C7D-49F0-B5A2-819C3E74D066">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="ClusterOverview"
+                  Description="Klyngeanalyse med 200 algoritmer og vektor-PDF (Copyright Robert Larsen)"
+                  Target="[INSTALLFOLDER]cluster_overview.exe"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="AppIcon.ico" />
+        <Shortcut Id="UninstallProductShortcut"
+                  Name="Avinstaller ClusterOverview"
+                  Description="Avinstaller ClusterOverview"
+                  Target="[System64Folder]msiexec.exe"
+                  Arguments="/x [ProductCode]" />
+        <RemoveFolder Id="CleanUpStartMenuFolder"
+                      Directory="ApplicationProgramsFolder"
+                      On="uninstall" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\Robert Larsen\ClusterOverview"
+                       Name="StartMenuShortcut"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+
+      <Component Id="DesktopShortcut"
+                 Directory="DesktopFolder"
+                 Guid="A95F8C12-4E2B-48A1-9D36-74B2C8E51F77">
+        <Shortcut Id="ApplicationDesktopShortcut"
+                  Name="ClusterOverview"
+                  Description="Klyngeanalyse med 200 algoritmer og vektor-PDF"
+                  Target="[INSTALLFOLDER]cluster_overview.exe"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="AppIcon.ico" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\Robert Larsen\ClusterOverview"
+                       Name="DesktopShortcut"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Feature Tree -->
+    <Feature Id="MainFeature"
+             Title="ClusterOverview"
+             Description="Native Rust klyngeanalyse-applikasjon med 200 algoritmer, eksempelfiler og snarveier."
+             Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="SampleDataComponents" />
+      <ComponentGroupRef Id="ShortcutComponents" />
+    </Feature>
+
+  </Package>
+</Wix>

@@ -26,9 +26,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Default: Launch native Rust desktop GUI (eframe/egui — zero HTML/WebView)
     let native_options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
-            .with_title("ClusterOverview — Klyngeanalyse (200 algoritmer)")
-            .with_inner_size([1420.0, 880.0])
-            .with_min_inner_size([1024.0, 680.0])
+            .with_title("ClusterOverview — Klyngeanalyse (200 algoritmer)  |  © Robert Larsen")
+            .with_inner_size([1240.0, 780.0])
+            .with_min_inner_size([840.0, 560.0])
             .with_drag_and_drop(true),
         ..Default::default()
     };
@@ -43,7 +43,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 fn run_cli(args: &[String]) -> Result<(), Box<dyn std::error::Error>> {
     if args.iter().any(|a| a == "--help" || a == "-h") {
-        println!("ClusterOverview — 200 klyngealgoritmer i ren Rust");
+        println!("ClusterOverview v1.0.0 — 200 klyngealgoritmer i ren Rust");
+        println!("Copyright (c) 2026 Robert Larsen (MIT License)");
         println!("Bruk:");
         println!("  cluster_overview                                   (Starter native GUI)");
         println!("  cluster_overview --csv data.csv --pdf rapport.pdf [--k 3] [--max-samples 240] [--compact]");

@@ -2,6 +2,9 @@
 name = "cluster_overview"
 version = "1.0.0"
 edition = "2021"
+authors = ["Robert Larsen"]
+license = "MIT"
+repository = "https://github.com/roblar658/clusterOverview"
 description = "Profesjonelt klyngeanalyse-verktøy i Rust med 200 algoritmer, native GUI og PDF-rapportgenerator"
 
 [dependencies]

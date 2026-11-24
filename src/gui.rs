@@ -156,6 +156,10 @@ impl ClusterOverviewApp {
         visuals.widgets.hovered.corner_radius = CornerRadius::same(6);
         visuals.widgets.active.corner_radius = CornerRadius::same(6);
         ctx.set_visuals(visuals);
+        // Ensure all labels and text wrap cleanly inside available bounds instead of overflowing off-screen
+        ctx.style_mut(|s| {
+            s.wrap_mode = Some(egui::TextWrapMode::Wrap);
+        });
     }
 
     fn load_raw_dataset(&mut self, raw: RawCsvDataset) {
@@ -388,10 +392,11 @@ impl eframe::App for ClusterOverviewApp {
                 egui::Frame::new()
                     .fill(Color32::WHITE)
                     .stroke(Stroke::new(1.0_f32, Color32::from_rgb(226, 232, 240)))
-                    .inner_margin(Margin::symmetric(14, 9)),
+                    .inner_margin(Margin::symmetric(12, 8)),
             )
             .show(ctx, |ui| {
-                ui.horizontal(|ui| {
+                ui.horizontal_wrapped(|ui| {
+                    ui.spacing_mut().item_spacing = Vec2::new(8.0, 6.0);
                     // Brand badge
                     let badge_bg = Color32::from_rgb(37, 99, 235);
                     egui::Frame::new()
@@ -411,8 +416,6 @@ impl eframe::App for ClusterOverviewApp {
                         );
                     });
 
-                    ui.add_space(16.0);
-                    ui.separator();
                     ui.add_space(6.0);
 
                     // Primary toolbar buttons
@@ -435,7 +438,6 @@ impl eframe::App for ClusterOverviewApp {
                         }
                     });
 
-                    ui.add_space(6.0);
                     let sel_cnt = self.selected_algos.iter().filter(|&&b| b).count();
                     let is_running = self.bg_run.is_some();
                     let run_btn = egui::Button::new(
@@ -480,34 +482,45 @@ impl eframe::App for ClusterOverviewApp {
             .frame(
                 egui::Frame::new()
                     .fill(Color32::from_rgb(241, 245, 249))
-                    .inner_margin(Margin::symmetric(14, 5)),
+                    .inner_margin(Margin::symmetric(12, 5)),
             )
             .show(ctx, |ui| {
-                ui.horizontal(|ui| {
-                    if let Some((msg, is_err)) = &self.status_msg {
-                        let c = if *is_err {
-                            Color32::from_rgb(220, 38, 38)
-                        } else {
-                            self.muted_color()
-                        };
-                        ui.label(RichText::new(msg).size(11.5).color(c));
-                    }
-                    ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                        if let Some(path) = &self.last_pdf_path {
-                            if ui.small_button("Åpne siste PDF").clicked() {
-                                open_file_in_os(path);
-                            }
+                // Allocate right-aligned status items & copyright first so they never clip,
+                // then render the status message truncated cleanly inside the remaining width.
+                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                    ui.label(
+                        RichText::new("© 2026 Robert Larsen")
+                            .size(11.0)
+                            .color(self.muted_color()),
+                    );
+                    if let Some(path) = &self.last_pdf_path {
+                        ui.separator();
+                        if ui.small_button("Åpne siste PDF").clicked() {
+                            open_file_in_os(path);
                         }
-                        if !self.results.is_empty() {
-                            ui.label(
-                                RichText::new(format!(
-                                    "{} resultater klar  •  {:.2} sek",
-                                    self.results.len(),
-                                    self.last_run_wall_secs
-                                ))
-                                .size(11.0)
-                                .color(Color32::from_rgb(5, 150, 105)),
-                            );
+                    }
+                    if !self.results.is_empty() {
+                        ui.separator();
+                        ui.label(
+                            RichText::new(format!(
+                                "{} klar • {:.2}s",
+                                self.results.len(),
+                                self.last_run_wall_secs
+                            ))
+                            .size(11.0)
+                            .color(Color32::from_rgb(5, 150, 105)),
+                        );
+                    }
+                    ui.separator();
+                    ui.with_layout(egui::Layout::left_to_right(egui::Align::Center), |ui| {
+                        if let Some((msg, is_err)) = &self.status_msg {
+                            let c = if *is_err {
+                                Color32::from_rgb(220, 38, 38)
+                            } else {
+                                self.muted_color()
+                            };
+                            ui.add(egui::Label::new(RichText::new(msg).size(11.5).color(c)).truncate())
+                                .on_hover_text(msg);
                         }
                     });
                 });
@@ -518,9 +531,9 @@ impl eframe::App for ClusterOverviewApp {
         // =====================================================================
         egui::SidePanel::left("left_sidebar")
             .resizable(true)
-            .default_width(310.0)
-            .min_width(265.0)
-            .max_width(420.0)
+            .default_width(295.0)
+            .min_width(240.0)
+            .max_width(400.0)
             .show(ctx, |ui| {
                 egui::ScrollArea::vertical().auto_shrink([false; 2]).show(ui, |ui| {
                     ui.add_space(6.0);
@@ -537,8 +550,8 @@ impl eframe::App for ClusterOverviewApp {
         // CENTRAL WORKSPACE WITH 4 TABS
         // =====================================================================
         egui::CentralPanel::default().show(ctx, |ui| {
-            // Tab Bar
-            ui.horizontal(|ui| {
+            // Tab Bar (wraps cleanly on narrower screens)
+            ui.horizontal_wrapped(|ui| {
                 let tabs = [
                     (ActiveTab::Overview, "Oversikt & Data"),
                     (ActiveTab::Algorithms, "Algoritmeresultater"),
@@ -579,18 +592,16 @@ impl eframe::App for ClusterOverviewApp {
                 let elapsed = bg.started.elapsed().as_secs_f64();
 
                 self.card_frame().show(ui, |ui| {
-                    ui.horizontal(|ui| {
+                    ui.horizontal_wrapped(|ui| {
                         ui.label(
                             RichText::new(format!("Kjører klyngeanalyse: {} / {} algoritmer", done, total))
                                 .strong()
                                 .color(Color32::from_rgb(37, 99, 235)),
                         );
                         ui.label(RichText::new(format!("({:.1} sek)", elapsed)).color(self.muted_color()));
-                        ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                            if ui.button("Avbryt").clicked() {
-                                bg.progress.cancelled.store(true, Ordering::SeqCst);
-                            }
-                        });
+                        if ui.button("Avbryt").clicked() {
+                            bg.progress.cancelled.store(true, Ordering::SeqCst);
+                        }
                     });
                     ui.add(
                         egui::ProgressBar::new(frac)
@@ -638,10 +649,14 @@ impl ClusterOverviewApp {
                 );
                 ui.add_space(6.0);
 
+                let combo_w = (ui.available_width() - 88.0).clamp(95.0, 210.0);
+
                 // Scaling combo
                 ui.horizontal(|ui| {
-                    ui.label("Skalering:");
+                    ui.add_sized([76.0, 18.0], egui::Label::new("Skalering:"));
                     egui::ComboBox::from_id_salt("scaling_combo")
+                        .width(combo_w)
+                        .truncate()
                         .selected_text(self.preprocess_cfg.scaling.label_no())
                         .show_ui(ui, |ui| {
                             for m in [ScalingMethod::ZScore, ScalingMethod::MinMax, ScalingMethod::None] {
@@ -654,8 +669,10 @@ impl ClusterOverviewApp {
 
                 // Missing value strategy
                 ui.horizontal(|ui| {
-                    ui.label("Manglende:");
+                    ui.add_sized([76.0, 18.0], egui::Label::new("Manglende:"));
                     egui::ComboBox::from_id_salt("missing_combo")
+                        .width(combo_w)
+                        .truncate()
                         .selected_text(self.preprocess_cfg.missing_strategy.label_no())
                         .show_ui(ui, |ui| {
                             for m in [MissingStrategy::MeanMode, MissingStrategy::DropRow] {
@@ -668,7 +685,7 @@ impl ClusterOverviewApp {
 
                 // Ground-truth label column (for ARI)
                 ui.horizontal(|ui| {
-                    ui.label("Fasit (ARI):");
+                    ui.add_sized([76.0, 18.0], egui::Label::new("Fasit (ARI):"));
                     let cur_lbl = self
                         .preprocess_cfg
                         .label_column
@@ -676,6 +693,8 @@ impl ClusterOverviewApp {
                         .map(|c| c.name.as_str())
                         .unwrap_or("Ingen");
                     egui::ComboBox::from_id_salt("label_col_combo")
+                        .width(combo_w)
+                        .truncate()
                         .selected_text(cur_lbl)
                         .show_ui(ui, |ui| {
                             if ui.selectable_value(&mut self.preprocess_cfg.label_column, None, "Ingen").changed() {
@@ -696,9 +715,11 @@ impl ClusterOverviewApp {
                         });
                 });
 
-                // Max sample cap slider
-                ui.horizontal(|ui| {
-                    ui.label("Maks utvalg:");
+                // Max sample cap slider (stacked cleanly so slider + value never clip)
+                ui.add_space(2.0);
+                ui.label("Maks utvalg:");
+                ui.scope(|ui| {
+                    ui.spacing_mut().slider_width = (ui.available_width() - 84.0).max(70.0);
                     if ui
                         .add(egui::Slider::new(&mut self.preprocess_cfg.max_samples, 50..=800).suffix(" rader"))
                         .changed()
@@ -716,7 +737,7 @@ impl ClusterOverviewApp {
                 ))
                 .default_open(false)
                 .show(ui, |ui| {
-                    ui.horizontal(|ui| {
+                    ui.horizontal_wrapped(|ui| {
                         if ui.small_button("Alle").clicked() {
                             self.preprocess_cfg.selected_columns.fill(true);
                             config_changed = true;
@@ -765,12 +786,13 @@ impl ClusterOverviewApp {
             ui.label(RichText::new("2. Analyseparametere").strong().size(13.0).color(heading));
             ui.add_space(4.0);
 
-            ui.horizontal(|ui| {
-                ui.label("Antall klynger (k):");
+            ui.label("Antall klynger (k):");
+            ui.scope(|ui| {
+                ui.spacing_mut().slider_width = (ui.available_width() - 56.0).max(70.0);
                 ui.add(egui::Slider::new(&mut self.run_cfg.target_k, 2..=12));
             });
             if let Some(sk) = suggested_k {
-                ui.horizontal(|ui| {
+                ui.horizontal_wrapped(|ui| {
                     ui.label(
                         RichText::new(format!("Anbefalt k: {}", sk))
                             .size(11.0)
@@ -782,9 +804,12 @@ impl ClusterOverviewApp {
                 });
             }
 
+            let combo_w = (ui.available_width() - 88.0).clamp(95.0, 210.0);
             ui.horizontal(|ui| {
-                ui.label("Kvalitet:");
+                ui.add_sized([76.0, 18.0], egui::Label::new("Kvalitet:"));
                 egui::ComboBox::from_id_salt("quality_combo")
+                    .width(combo_w)
+                    .truncate()
                     .selected_text(self.run_cfg.quality.label_no())
                     .show_ui(ui, |ui| {
                         for q in [QualityPreset::Fast, QualityPreset::Standard, QualityPreset::Thorough] {
@@ -793,8 +818,8 @@ impl ClusterOverviewApp {
                     });
             });
 
-            ui.horizontal(|ui| {
-                ui.label("Frø (seed):");
+            ui.horizontal_wrapped(|ui| {
+                ui.add_sized([76.0, 18.0], egui::Label::new("Frø (seed):"));
                 let mut seed_i = self.run_cfg.seed as i64;
                 if ui.add(egui::DragValue::new(&mut seed_i).range(0..=999999)).changed() {
                     self.run_cfg.seed = seed_i.max(0) as u64;
@@ -822,7 +847,7 @@ impl ClusterOverviewApp {
                 if ui.small_button("Fjern alle").clicked() {
                     self.selected_algos.fill(false);
                 }
-                if ui.small_button("Rask kjerne (16)").clicked() {
+                if ui.small_button("Rask kjerne (18)").clicked() {
                     self.selected_algos.fill(false);
                     for id in [2, 4, 10, 12, 31, 32, 34, 51, 59, 64, 80, 81, 93, 103, 107, 151, 176, 181] {
                         self.selected_algos[id - 1] = true;
@@ -865,33 +890,51 @@ impl ClusterOverviewApp {
                 let mut all_on = cat_sel == specs.len();
                 let acc = cat.accent_rgb();
 
-                ui.horizontal(|ui| {
+                let id = ui.make_persistent_id(format!("cat_pick_{}", cat.number()));
+                let mut state = egui::collapsing_header::CollapsingState::load_with_default_open(
+                    ui.ctx(),
+                    id,
+                    !query.is_empty(),
+                );
+                if !query.is_empty() {
+                    state.set_open(true);
+                }
+
+                let header_txt = RichText::new(format!(
+                    "{}. {} ({}/{})",
+                    cat.number(),
+                    cat.short_name_no(),
+                    cat_sel,
+                    specs.len()
+                ))
+                .size(11.6)
+                .strong()
+                .color(Color32::from_rgb(acc[0], acc[1], acc[2]));
+
+                let header_res = ui.horizontal(|ui| {
+                    state.show_toggle_button(ui, egui::collapsing_header::paint_default_icon);
                     if ui.checkbox(&mut all_on, "").changed() {
                         for s in &specs {
                             self.selected_algos[s.id - 1] = all_on;
                         }
                     }
-                    let header_txt = RichText::new(format!(
-                        "{}. {} ({}/{})",
-                        cat.number(),
-                        cat.short_name_no(),
-                        cat_sel,
-                        specs.len()
-                    ))
-                    .size(11.8)
-                    .strong()
-                    .color(Color32::from_rgb(acc[0], acc[1], acc[2]));
+                    let lbl = ui.add(
+                        egui::Label::new(header_txt)
+                            .truncate()
+                            .sense(egui::Sense::click()),
+                    );
+                    if lbl.clicked() {
+                        state.toggle(ui);
+                    }
+                    lbl.on_hover_text(cat.title_no());
+                });
 
-                    egui::CollapsingHeader::new(header_txt)
-                        .id_salt(format!("cat_pick_{}", cat.number()))
-                        .default_open(!query.is_empty())
-                        .show(ui, |ui| {
-                            for s in matching {
-                                let on = &mut self.selected_algos[s.id - 1];
-                                ui.checkbox(on, RichText::new(format!("#{:03} {}", s.id, s.name)).size(11.0))
-                                    .on_hover_text(s.description_no);
-                            }
-                        });
+                state.show_body_indented(&header_res.response, ui, |ui| {
+                    for s in matching {
+                        let on = &mut self.selected_algos[s.id - 1];
+                        ui.checkbox(on, RichText::new(format!("#{:03} {}", s.id, s.name)).size(11.0))
+                            .on_hover_text(s.description_no);
+                    }
                 });
             }
         });
@@ -910,11 +953,10 @@ impl ClusterOverviewApp {
                 ui.add_space(10.0);
             }
 
-            // Data preview + PCA 2D preview side by side
+            // Data preview + PCA 2D preview (side-by-side on wide screens, stacked on narrow screens)
             if let Some(raw) = &self.raw_dataset {
-                ui.columns(2, |cols| {
-                    // Left: Raw PCA 2D scatter preview
-                    self.card_frame().show(&mut cols[0], |ui| {
+                let render_pca_card = |ui: &mut egui::Ui| {
+                    self.card_frame().show(ui, |ui| {
                         ui.label(RichText::new("2D PCA-forhåndsvisning av datasett").strong().size(13.5).color(self.heading_color()));
                         if let Some(prep) = &self.prepared_preview {
                             ui.label(
@@ -932,12 +974,13 @@ impl ClusterOverviewApp {
                             draw_egui_scatter(ui, prep, &lbls, PlotAxisMode::Pca2D, 250.0);
                         }
                     });
+                };
 
-                    // Right: Column profiling summary
-                    self.card_frame().show(&mut cols[1], |ui| {
+                let render_cols_card = |ui: &mut egui::Ui| {
+                    self.card_frame().show(ui, |ui| {
                         ui.label(RichText::new("Kolonneoversikt (CSV)").strong().size(13.5).color(self.heading_color()));
                         ui.add_space(4.0);
-                        egui::ScrollArea::vertical().max_height(265.0).id_salt("col_stats_scroll").show(ui, |ui| {
+                        egui::ScrollArea::both().max_height(265.0).id_salt("col_stats_scroll").show(ui, |ui| {
                             egui::Grid::new("col_stats_grid").striped(true).spacing([10.0, 4.0]).show(ui, |ui| {
                                 ui.label(RichText::new("Kolonne").strong().size(11.5));
                                 ui.label(RichText::new("Type").strong().size(11.5));
@@ -961,7 +1004,18 @@ impl ClusterOverviewApp {
                             });
                         });
                     });
-                });
+                };
+
+                if ui.available_width() >= 720.0 {
+                    ui.columns(2, |cols| {
+                        render_pca_card(&mut cols[0]);
+                        render_cols_card(&mut cols[1]);
+                    });
+                } else {
+                    render_pca_card(ui);
+                    ui.add_space(10.0);
+                    render_cols_card(ui);
+                }
 
                 ui.add_space(10.0);
 
@@ -974,7 +1028,7 @@ impl ClusterOverviewApp {
                             .color(self.heading_color()),
                     );
                     ui.add_space(4.0);
-                    egui::ScrollArea::horizontal().id_salt("csv_preview_h").show(ui, |ui| {
+                    egui::ScrollArea::both().max_height(320.0).id_salt("csv_preview_h").show(ui, |ui| {
                         egui::Grid::new("csv_preview_grid").striped(true).spacing([12.0, 3.0]).show(ui, |ui| {
                             ui.label(RichText::new("#").strong().size(11.0).color(self.muted_color()));
                             for h in &raw.headers {
@@ -1013,41 +1067,58 @@ impl ClusterOverviewApp {
         let avg_ms = self.results.iter().map(|r| r.duration_ms).sum::<f64>()
             / self.results.len().max(1) as f64;
 
-        ui.columns(4, |cols| {
-            let cards = [
-                (
-                    "ALGORITMER FULLFØRT",
-                    format!("{}", self.results.len()),
-                    format!("Total veggklokke: {:.2} sek (snitt {:.1} ms)", self.last_run_wall_secs, avg_ms),
-                    Color32::from_rgb(37, 99, 235),
-                ),
-                (
-                    "BESTE SILHOUETTE",
-                    best_sil.map(|(_, s)| format!("{:.3}", s)).unwrap_or_else(|| "—".into()),
-                    best_sil.map(|(r, _)| format!("#{:03} {}", r.id, r.name)).unwrap_or_default(),
-                    Color32::from_rgb(5, 150, 105),
-                ),
-                (
-                    "BESTE CALINSKI-HARABASZ",
-                    best_ch.map(|(_, v)| format!("{:.1}", v)).unwrap_or_else(|| "—".into()),
-                    best_ch.map(|(r, _)| format!("#{:03} {}", r.id, r.name)).unwrap_or_default(),
-                    Color32::from_rgb(124, 58, 237),
-                ),
-                (
-                    "RASKESTE ALGORITME",
-                    fastest.map(|r| format!("{:.2} ms", r.duration_ms)).unwrap_or_else(|| "—".into()),
-                    fastest.map(|r| format!("#{:03} {}", r.id, r.name)).unwrap_or_default(),
-                    Color32::from_rgb(217, 119, 6),
-                ),
-            ];
-            for (i, (title, val, sub, accent)) in cards.iter().enumerate() {
-                self.card_frame().show(&mut cols[i], |ui| {
-                    ui.label(RichText::new(*title).strong().size(10.0).color(*accent));
-                    ui.label(RichText::new(val).strong().size(22.0).color(self.heading_color()));
-                    ui.label(RichText::new(sub).size(11.0).color(self.muted_color()));
-                });
-            }
-        });
+        let cards = [
+            (
+                "ALGORITMER FULLFØRT",
+                format!("{}", self.results.len()),
+                format!("Total veggklokke: {:.2} sek (snitt {:.1} ms)", self.last_run_wall_secs, avg_ms),
+                Color32::from_rgb(37, 99, 235),
+            ),
+            (
+                "BESTE SILHOUETTE",
+                best_sil.map(|(_, s)| format!("{:.3}", s)).unwrap_or_else(|| "—".into()),
+                best_sil.map(|(r, _)| format!("#{:03} {}", r.id, r.name)).unwrap_or_default(),
+                Color32::from_rgb(5, 150, 105),
+            ),
+            (
+                "BESTE CALINSKI-HARABASZ",
+                best_ch.map(|(_, v)| format!("{:.1}", v)).unwrap_or_else(|| "—".into()),
+                best_ch.map(|(r, _)| format!("#{:03} {}", r.id, r.name)).unwrap_or_default(),
+                Color32::from_rgb(124, 58, 237),
+            ),
+            (
+                "RASKESTE ALGORITME",
+                fastest.map(|r| format!("{:.2} ms", r.duration_ms)).unwrap_or_else(|| "—".into()),
+                fastest.map(|r| format!("#{:03} {}", r.id, r.name)).unwrap_or_default(),
+                Color32::from_rgb(217, 119, 6),
+            ),
+        ];
+
+        let draw_kpi = |ui: &mut egui::Ui, title: &str, val: &str, sub: &str, accent: Color32| {
+            self.card_frame().show(ui, |ui| {
+                ui.label(RichText::new(title).strong().size(10.0).color(accent));
+                ui.label(RichText::new(val).strong().size(21.0).color(self.heading_color()));
+                ui.label(RichText::new(sub).size(11.0).color(self.muted_color()));
+            });
+        };
+
+        if ui.available_width() >= 760.0 {
+            ui.columns(4, |cols| {
+                for (i, (title, val, sub, accent)) in cards.iter().enumerate() {
+                    draw_kpi(&mut cols[i], title, val, sub, *accent);
+                }
+            });
+        } else {
+            ui.columns(2, |cols| {
+                draw_kpi(&mut cols[0], cards[0].0, &cards[0].1, &cards[0].2, cards[0].3);
+                draw_kpi(&mut cols[1], cards[1].0, &cards[1].1, &cards[1].2, cards[1].3);
+            });
+            ui.add_space(6.0);
+            ui.columns(2, |cols| {
+                draw_kpi(&mut cols[0], cards[2].0, &cards[2].1, &cards[2].2, cards[2].3);
+                draw_kpi(&mut cols[1], cards[3].0, &cards[3].1, &cards[3].2, cards[3].3);
+            });
+        }
     }
 
     fn render_category_bar_chart(&self, ui: &mut egui::Ui) {
@@ -1059,6 +1130,7 @@ impl ClusterOverviewApp {
                     .color(self.heading_color()),
             );
             ui.add_space(6.0);
+            let row_w = ui.available_width();
             for cat in Category::ALL {
                 let list: Vec<_> = self.results.iter().filter(|r| r.category == cat).collect();
                 if list.is_empty() {
@@ -1070,18 +1142,11 @@ impl ClusterOverviewApp {
                 let max_clean = if max_s.is_finite() { max_s } else { 0.0 };
                 let acc = cat.accent_rgb();
                 let c_main = Color32::from_rgb(acc[0], acc[1], acc[2]);
+                let cat_lbl = format!("{}. {} ({})", cat.number(), cat.short_name_no(), list.len());
+                let score_lbl = format!("Snitt {:.3} | Maks {:.3}", avg_s, max_clean);
 
-                ui.horizontal(|ui| {
-                    ui.add_sized(
-                        [165.0, 18.0],
-                        egui::Label::new(
-                            RichText::new(format!("{}. {} ({})", cat.number(), cat.short_name_no(), list.len()))
-                                .size(11.5)
-                                .strong(),
-                        ),
-                    );
-                    let avail = (ui.available_width() - 135.0).max(80.0);
-                    let (rect, _) = ui.allocate_exact_size(Vec2::new(avail, 16.0), egui::Sense::hover());
+                let paint_bar = |ui: &mut egui::Ui, width: f32, height: f32| {
+                    let (rect, _) = ui.allocate_exact_size(Vec2::new(width.max(40.0), height), egui::Sense::hover());
                     let painter = ui.painter();
                     let track = Color32::from_rgb(226, 232, 240);
                     painter.rect_filled(rect, 4.0, track);
@@ -1097,13 +1162,39 @@ impl ClusterOverviewApp {
                         3.0,
                         c_main,
                     );
-                    ui.label(
-                        RichText::new(format!("Snitt {:.3}  |  Maks {:.3}", avg_s, max_clean))
-                            .monospace()
-                            .size(11.0)
-                            .color(self.muted_color()),
-                    );
-                });
+                };
+
+                if row_w < 460.0 {
+                    // Compact stacked row for narrow windows so right-hand scores never clip
+                    ui.horizontal_wrapped(|ui| {
+                        ui.label(RichText::new(&cat_lbl).size(11.5).strong());
+                        ui.label(RichText::new(&score_lbl).monospace().size(10.5).color(self.muted_color()));
+                    });
+                    paint_bar(ui, ui.available_width(), 14.0);
+                    ui.add_space(3.0);
+                } else {
+                    let label_w = (row_w * 0.27).clamp(120.0, 165.0);
+                    let score_w = 156.0_f32;
+                    let bar_w = (row_w - label_w - score_w - 22.0).max(50.0);
+                    ui.horizontal(|ui| {
+                        ui.add_sized(
+                            [label_w, 18.0],
+                            egui::Label::new(RichText::new(&cat_lbl).size(11.5).strong()).truncate(),
+                        )
+                        .on_hover_text(cat.title_no());
+                        paint_bar(ui, bar_w, 16.0);
+                        ui.add_sized(
+                            [score_w, 18.0],
+                            egui::Label::new(
+                                RichText::new(&score_lbl)
+                                    .monospace()
+                                    .size(10.5)
+                                    .color(self.muted_color()),
+                            )
+                            .truncate(),
+                        );
+                    });
+                }
             }
         });
     }
@@ -1124,13 +1215,14 @@ impl ClusterOverviewApp {
             return;
         }
 
-        // Filter bar
-        ui.horizontal(|ui| {
+        // Filter bar (wraps cleanly so buttons never overflow off-screen)
+        ui.horizontal_wrapped(|ui| {
             ui.label("Søk:");
+            let search_w = (ui.available_width() * 0.28).clamp(130.0, 210.0);
             ui.add(
                 egui::TextEdit::singleline(&mut self.result_search)
                     .hint_text("Navn, nummer eller beskrivelse...")
-                    .desired_width(220.0),
+                    .desired_width(search_w),
             );
             ui.label("Kategori:");
             let cat_txt = self
@@ -1138,6 +1230,8 @@ impl ClusterOverviewApp {
                 .map(|c| format!("{}. {}", c.number(), c.short_name_no()))
                 .unwrap_or_else(|| "Alle 8 kategorier".to_string());
             egui::ComboBox::from_id_salt("res_cat_filter")
+                .width(155.0)
+                .truncate()
                 .selected_text(cat_txt)
                 .show_ui(ui, |ui| {
                     ui.selectable_value(&mut self.result_category_filter, None, "Alle 8 kategorier");
@@ -1149,16 +1243,14 @@ impl ClusterOverviewApp {
                         );
                     }
                 });
-            ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                if ui.button("Sorter etter Silhouette").clicked() {
-                    self.sort_col = SortColumn::Silhouette;
-                    self.sort_asc = false;
-                }
-                if ui.button("Sorter etter ID").clicked() {
-                    self.sort_col = SortColumn::Id;
-                    self.sort_asc = true;
-                }
-            });
+            if ui.button("Sorter etter Silhouette").clicked() {
+                self.sort_col = SortColumn::Silhouette;
+                self.sort_asc = false;
+            }
+            if ui.button("Sorter etter ID").clicked() {
+                self.sort_col = SortColumn::Id;
+                self.sort_asc = true;
+            }
         });
         ui.add_space(6.0);
 
@@ -1212,244 +1304,272 @@ impl ClusterOverviewApp {
             if self.sort_asc { ord } else { ord.reverse() }
         });
 
-        // Two-pane layout: Left = Results Table (58%), Right = Interactive Algorithm Inspector (42%)
+        // Responsive two-pane layout: side-by-side when wide enough, stacked vertically on narrow screens
         let total_w = ui.available_width();
-        let left_w = (total_w * 0.56).max(380.0);
-        let right_w = (total_w - left_w - 10.0).max(300.0);
-        let avail_h = ui.available_height();
+        let avail_h = ui.available_height().max(260.0);
 
-        ui.horizontal_top(|ui| {
-            // Left: Sortable results table
+        if total_w >= 720.0 {
+            let gap = 8.0_f32;
+            let left_w = ((total_w - gap) * 0.55).floor().max(320.0);
+            let right_w = (total_w - gap - left_w).max(240.0);
+
+            ui.horizontal_top(|ui| {
+                ui.allocate_ui_with_layout(
+                    Vec2::new(left_w, avail_h),
+                    egui::Layout::top_down(egui::Align::Min),
+                    |ui| self.render_results_table_card(ui, &indices),
+                );
+                ui.add_space(gap);
+                ui.allocate_ui_with_layout(
+                    Vec2::new(right_w, avail_h),
+                    egui::Layout::top_down(egui::Align::Min),
+                    |ui| {
+                        egui::ScrollArea::vertical().id_salt("inspector_scroll").show(ui, |ui| {
+                            self.render_algorithm_inspector_card(ui);
+                        });
+                    },
+                );
+            });
+        } else {
+            // Narrow screen fallback: stack table above inspector so nothing ever goes off-screen
+            let table_h = (avail_h * 0.45).clamp(180.0, 320.0);
             ui.allocate_ui_with_layout(
-                Vec2::new(left_w, avail_h),
+                Vec2::new(total_w, table_h),
                 egui::Layout::top_down(egui::Align::Min),
-                |ui| {
-                    self.card_frame().show(ui, |ui| {
-                        let mut clicked_id = None;
-                        let mut sort_toggle = None;
+                |ui| self.render_results_table_card(ui, &indices),
+            );
+            ui.add_space(8.0);
+            egui::ScrollArea::vertical().id_salt("inspector_scroll_stacked").show(ui, |ui| {
+                self.render_algorithm_inspector_card(ui);
+            });
+        }
+    }
 
-                        TableBuilder::new(ui)
-                            .striped(true)
-                            .resizable(true)
-                            .cell_layout(egui::Layout::left_to_right(egui::Align::Center))
-                            .column(Column::initial(36.0).at_least(30.0))
-                            .column(Column::remainder().at_least(130.0))
-                            .column(Column::initial(34.0))
-                            .column(Column::initial(46.0))
-                            .column(Column::initial(58.0))
-                            .column(Column::initial(52.0))
-                            .column(Column::initial(58.0))
-                            .column(Column::initial(54.0))
-                            .sense(egui::Sense::click())
-                            .header(22.0, |mut header| {
-                                let hdr_defs = [
-                                    ("#", SortColumn::Id),
-                                    ("Algoritme", SortColumn::Name),
-                                    ("k", SortColumn::Clusters),
-                                    ("Støy", SortColumn::Noise),
-                                    ("Sil.", SortColumn::Silhouette),
-                                    ("DBI", SortColumn::DaviesBouldin),
-                                    ("CHI", SortColumn::CalinskiHarabasz),
-                                    ("ms", SortColumn::Duration),
-                                ];
-                                for (txt, sc) in hdr_defs {
-                                    header.col(|ui| {
-                                        let arrow = if self.sort_col == sc {
-                                            if self.sort_asc { " ▲" } else { " ▼" }
-                                        } else {
-                                            ""
-                                        };
-                                        if ui
-                                            .selectable_label(false, RichText::new(format!("{}{}", txt, arrow)).strong().size(11.0))
-                                            .clicked()
-                                        {
-                                            sort_toggle = Some(sc);
-                                        }
-                                    });
-                                }
-                            })
-                            .body(|body| {
-                                body.rows(22.0, indices.len(), |mut row| {
-                                    let r = &self.results[indices[row.index()]];
-                                    let is_sel = self.selected_result_id == Some(r.id);
-                                    row.set_selected(is_sel);
+    fn render_results_table_card(&mut self, ui: &mut egui::Ui, indices: &[usize]) {
+        self.card_frame().show(ui, |ui| {
+            let mut clicked_id = None;
+            let mut sort_toggle = None;
 
-                                    row.col(|ui| {
-                                        let acc = r.category.accent_rgb();
-                                        ui.label(
-                                            RichText::new(format!("{:03}", r.id))
-                                                .monospace()
-                                                .size(11.0)
-                                                .color(Color32::from_rgb(acc[0], acc[1], acc[2])),
-                                        );
-                                    });
-                                    row.col(|ui| {
-                                        ui.label(RichText::new(&r.name).size(11.5).strong());
-                                    });
-                                    row.col(|ui| {
-                                        ui.label(RichText::new(r.metrics.n_clusters.to_string()).size(11.0));
-                                    });
-                                    row.col(|ui| {
-                                        ui.label(RichText::new(format!("{:.0}%", r.metrics.noise_ratio * 100.0)).size(11.0));
-                                    });
-                                    row.col(|ui| {
-                                        let txt = r.metrics.silhouette.map(|v| format!("{:.3}", v)).unwrap_or_else(|| "—".into());
-                                        let col = match r.metrics.silhouette {
-                                            Some(s) if s >= 0.45 => Color32::from_rgb(5, 150, 105),
-                                            Some(s) if s >= 0.20 => Color32::from_rgb(217, 119, 6),
-                                            _ => self.muted_color(),
-                                        };
-                                        ui.label(RichText::new(txt).strong().size(11.0).color(col));
-                                    });
-                                    row.col(|ui| {
-                                        let txt = r.metrics.davies_bouldin.map(|v| format!("{:.2}", v)).unwrap_or_else(|| "—".into());
-                                        ui.label(RichText::new(txt).size(11.0));
-                                    });
-                                    row.col(|ui| {
-                                        let txt = r.metrics.calinski_harabasz.map(|v| format!("{:.1}", v)).unwrap_or_else(|| "—".into());
-                                        ui.label(RichText::new(txt).size(11.0));
-                                    });
-                                    row.col(|ui| {
-                                        ui.label(RichText::new(format!("{:.1}", r.duration_ms)).monospace().size(10.5));
-                                    });
-
-                                    if row.response().clicked() {
-                                        clicked_id = Some(r.id);
-                                    }
-                                });
-                            });
-
-                        if let Some(id) = clicked_id {
-                            self.selected_result_id = Some(id);
-                        }
-                        if let Some(sc) = sort_toggle {
-                            if self.sort_col == sc {
-                                self.sort_asc = !self.sort_asc;
+            TableBuilder::new(ui)
+                .striped(true)
+                .resizable(true)
+                .cell_layout(egui::Layout::left_to_right(egui::Align::Center))
+                .column(Column::initial(34.0).at_least(28.0).clip(true))
+                .column(Column::remainder().at_least(95.0).clip(true))
+                .column(Column::initial(28.0).at_least(24.0).clip(true))
+                .column(Column::initial(40.0).at_least(34.0).clip(true))
+                .column(Column::initial(50.0).at_least(42.0).clip(true))
+                .column(Column::initial(46.0).at_least(38.0).clip(true))
+                .column(Column::initial(50.0).at_least(42.0).clip(true))
+                .column(Column::initial(46.0).at_least(38.0).clip(true))
+                .sense(egui::Sense::click())
+                .header(22.0, |mut header| {
+                    let hdr_defs = [
+                        ("#", SortColumn::Id),
+                        ("Algoritme", SortColumn::Name),
+                        ("k", SortColumn::Clusters),
+                        ("Støy", SortColumn::Noise),
+                        ("Sil.", SortColumn::Silhouette),
+                        ("DBI", SortColumn::DaviesBouldin),
+                        ("CHI", SortColumn::CalinskiHarabasz),
+                        ("ms", SortColumn::Duration),
+                    ];
+                    for (txt, sc) in hdr_defs {
+                        header.col(|ui| {
+                            let arrow = if self.sort_col == sc {
+                                if self.sort_asc { " ▲" } else { " ▼" }
                             } else {
-                                self.sort_col = sc;
-                                self.sort_asc = matches!(sc, SortColumn::Id | SortColumn::Name | SortColumn::DaviesBouldin | SortColumn::Duration);
+                                ""
+                            };
+                            if ui
+                                .selectable_label(false, RichText::new(format!("{}{}", txt, arrow)).strong().size(11.0))
+                                .clicked()
+                            {
+                                sort_toggle = Some(sc);
                             }
+                        });
+                    }
+                })
+                .body(|body| {
+                    body.rows(22.0, indices.len(), |mut row| {
+                        let r = &self.results[indices[row.index()]];
+                        let is_sel = self.selected_result_id == Some(r.id);
+                        row.set_selected(is_sel);
+
+                        row.col(|ui| {
+                            let acc = r.category.accent_rgb();
+                            ui.label(
+                                RichText::new(format!("{:03}", r.id))
+                                    .monospace()
+                                    .size(11.0)
+                                    .color(Color32::from_rgb(acc[0], acc[1], acc[2])),
+                            );
+                        });
+                        row.col(|ui| {
+                            ui.add(egui::Label::new(RichText::new(&r.name).size(11.5).strong()).truncate())
+                                .on_hover_text(&r.name);
+                        });
+                        row.col(|ui| {
+                            ui.label(RichText::new(r.metrics.n_clusters.to_string()).size(11.0));
+                        });
+                        row.col(|ui| {
+                            ui.label(RichText::new(format!("{:.0}%", r.metrics.noise_ratio * 100.0)).size(11.0));
+                        });
+                        row.col(|ui| {
+                            let txt = r.metrics.silhouette.map(|v| format!("{:.3}", v)).unwrap_or_else(|| "—".into());
+                            let col = match r.metrics.silhouette {
+                                Some(s) if s >= 0.45 => Color32::from_rgb(5, 150, 105),
+                                Some(s) if s >= 0.20 => Color32::from_rgb(217, 119, 6),
+                                _ => self.muted_color(),
+                            };
+                            ui.label(RichText::new(txt).strong().size(11.0).color(col));
+                        });
+                        row.col(|ui| {
+                            let txt = r.metrics.davies_bouldin.map(|v| format!("{:.2}", v)).unwrap_or_else(|| "—".into());
+                            ui.label(RichText::new(txt).size(11.0));
+                        });
+                        row.col(|ui| {
+                            let txt = r.metrics.calinski_harabasz.map(|v| format!("{:.1}", v)).unwrap_or_else(|| "—".into());
+                            ui.label(RichText::new(txt).size(11.0));
+                        });
+                        row.col(|ui| {
+                            ui.label(RichText::new(format!("{:.1}", r.duration_ms)).monospace().size(10.5));
+                        });
+
+                        if row.response().clicked() {
+                            clicked_id = Some(r.id);
                         }
                     });
-                },
-            );
+                });
 
-            ui.add_space(6.0);
-
-            // Right: Selected Algorithm Visual Inspector
-            ui.allocate_ui_with_layout(
-                Vec2::new(right_w, avail_h),
-                egui::Layout::top_down(egui::Align::Min),
-                |ui| {
-                    egui::ScrollArea::vertical().id_salt("inspector_scroll").show(ui, |ui| {
-                        let sel_res = self
-                            .selected_result_id
-                            .and_then(|id| self.results.iter().find(|r| r.id == id))
-                            .or_else(|| self.results.first())
-                            .cloned();
-
-                        if let (Some(r), Some(prep)) = (sel_res, self.last_prepared.clone()) {
-                            self.card_frame().show(ui, |ui| {
-                                let acc = r.category.accent_rgb();
-                                ui.horizontal(|ui| {
-                                    egui::Frame::new()
-                                        .fill(Color32::from_rgb(acc[0], acc[1], acc[2]))
-                                        .corner_radius(CornerRadius::same(4))
-                                        .inner_margin(Margin::symmetric(6, 2))
-                                        .show(ui, |ui| {
-                                            ui.label(RichText::new(format!("#{:03}", r.id)).strong().size(11.0).color(Color32::WHITE));
-                                        });
-                                    ui.label(RichText::new(&r.name).strong().size(15.0).color(self.heading_color()));
-                                });
-                                ui.label(RichText::new(r.category.title_no()).size(11.0).color(Color32::from_rgb(acc[0], acc[1], acc[2])));
-                                ui.add_space(4.0);
-                                ui.label(RichText::new(&r.description_no).size(12.0));
-                                ui.add_space(6.0);
-
-                                // Axis selector for interactive scatter plot
-                                ui.horizontal(|ui| {
-                                    ui.label(RichText::new("Projeksjon:").size(11.5));
-                                    let axis_lbl = match self.plot_axis_mode {
-                                        PlotAxisMode::Pca2D => "PCA 2D (PC1 vs PC2)".to_string(),
-                                        PlotAxisMode::RawColumns(x, y) => format!(
-                                            "{} vs {}",
-                                            prep.raw_numeric_names.get(x).map(|s| s.as_str()).unwrap_or("X"),
-                                            prep.raw_numeric_names.get(y).map(|s| s.as_str()).unwrap_or("Y"),
-                                        ),
-                                    };
-                                    egui::ComboBox::from_id_salt("plot_axis_combo")
-                                        .selected_text(axis_lbl)
-                                        .show_ui(ui, |ui| {
-                                            ui.selectable_value(&mut self.plot_axis_mode, PlotAxisMode::Pca2D, "PCA 2D (PC1 vs PC2)");
-                                            let m = prep.raw_numeric_names.len().min(6);
-                                            for a in 0..m {
-                                                for b in (a + 1)..m {
-                                                    ui.selectable_value(
-                                                        &mut self.plot_axis_mode,
-                                                        PlotAxisMode::RawColumns(a, b),
-                                                        format!("{} vs {}", prep.raw_numeric_names[a], prep.raw_numeric_names[b]),
-                                                    );
-                                                }
-                                            }
-                                        });
-                                });
-
-                                ui.add_space(4.0);
-                                draw_egui_scatter(ui, &prep, &r.labels, self.plot_axis_mode, 260.0);
-                                ui.add_space(8.0);
-
-                                // Metrics grid
-                                egui::Grid::new("inspector_metrics").striped(true).num_columns(2).spacing([20.0, 4.0]).show(ui, |ui| {
-                                    let rows = [
-                                        ("Antall klynger (k)", format!("{}", r.metrics.n_clusters)),
-                                        ("Støypunkter (-1)", format!("{} ({:.1}%)", r.metrics.n_noise, r.metrics.noise_ratio * 100.0)),
-                                        ("Silhouette-score [-1..1]", r.metrics.silhouette.map(|v| format!("{:.4}", v)).unwrap_or_else(|| "—".into())),
-                                        ("Davies-Bouldin (lavere=bedre)", r.metrics.davies_bouldin.map(|v| format!("{:.4}", v)).unwrap_or_else(|| "—".into())),
-                                        ("Calinski-Harabasz (høyere=bedre)", r.metrics.calinski_harabasz.map(|v| format!("{:.2}", v)).unwrap_or_else(|| "—".into())),
-                                        ("Dunn-indeks", r.metrics.dunn_index.map(|v| format!("{:.4}", v)).unwrap_or_else(|| "—".into())),
-                                        ("Inertia (SSE)", format!("{:.2}", r.metrics.inertia_sse)),
-                                        ("Balanse-entropi [0..1]", format!("{:.3}", r.metrics.balance_entropy)),
-                                        ("Kjøretid", format!("{:.2} ms", r.duration_ms)),
-                                    ];
-                                    for (k, v) in rows {
-                                        ui.label(RichText::new(k).size(11.5).color(self.muted_color()));
-                                        ui.label(RichText::new(v).strong().size(11.5));
-                                        ui.end_row();
-                                    }
-                                    if let Some(ari) = r.metrics.adjusted_rand_index {
-                                        ui.label(RichText::new("Adjusted Rand Index (fasit)").size(11.5).color(self.muted_color()));
-                                        ui.label(RichText::new(format!("{:.4}", ari)).strong().size(11.5).color(Color32::from_rgb(37, 99, 235)));
-                                        ui.end_row();
-                                    }
-                                });
-
-                                ui.add_space(6.0);
-                                ui.label(RichText::new("Klyngestørrelser:").strong().size(11.5));
-                                ui.horizontal_wrapped(|ui| {
-                                    for (cid, &sz) in r.metrics.cluster_sizes.iter().enumerate() {
-                                        let c = CLUSTER_PALETTE_U8[cid % CLUSTER_PALETTE_U8.len()];
-                                        egui::Frame::new()
-                                            .fill(Color32::from_rgb(c[0], c[1], c[2]).gamma_multiply(0.18))
-                                            .stroke(Stroke::new(1.0_f32, Color32::from_rgb(c[0], c[1], c[2])))
-                                            .corner_radius(CornerRadius::same(4))
-                                            .inner_margin(Margin::symmetric(6, 2))
-                                            .show(ui, |ui| {
-                                                ui.label(RichText::new(format!("C{}: {}", cid, sz)).size(10.5).strong());
-                                            });
-                                    }
-                                });
-
-                                ui.add_space(6.0);
-                                ui.label(RichText::new(format!("Parametere: {}", r.params_summary)).size(11.0).color(self.muted_color()));
-                                if !r.note.is_empty() {
-                                    ui.label(RichText::new(format!("Merknad: {}", r.note)).italics().size(11.0).color(self.muted_color()));
-                                }
-                            });
-                        }
-                    });
-                },
-            );
+            if let Some(id) = clicked_id {
+                self.selected_result_id = Some(id);
+            }
+            if let Some(sc) = sort_toggle {
+                if self.sort_col == sc {
+                    self.sort_asc = !self.sort_asc;
+                } else {
+                    self.sort_col = sc;
+                    self.sort_asc = matches!(sc, SortColumn::Id | SortColumn::Name | SortColumn::DaviesBouldin | SortColumn::Duration);
+                }
+            }
         });
+    }
+
+    fn render_algorithm_inspector_card(&mut self, ui: &mut egui::Ui) {
+        let sel_res = self
+            .selected_result_id
+            .and_then(|id| self.results.iter().find(|r| r.id == id))
+            .or_else(|| self.results.first())
+            .cloned();
+
+        if let (Some(r), Some(prep)) = (sel_res, self.last_prepared.clone()) {
+            self.card_frame().show(ui, |ui| {
+                let acc = r.category.accent_rgb();
+                ui.horizontal_wrapped(|ui| {
+                    egui::Frame::new()
+                        .fill(Color32::from_rgb(acc[0], acc[1], acc[2]))
+                        .corner_radius(CornerRadius::same(4))
+                        .inner_margin(Margin::symmetric(6, 2))
+                        .show(ui, |ui| {
+                            ui.label(RichText::new(format!("#{:03}", r.id)).strong().size(11.0).color(Color32::WHITE));
+                        });
+                    ui.label(RichText::new(&r.name).strong().size(15.0).color(self.heading_color()));
+                });
+                ui.label(RichText::new(r.category.title_no()).size(11.0).color(Color32::from_rgb(acc[0], acc[1], acc[2])));
+                ui.add_space(4.0);
+                ui.label(RichText::new(&r.description_no).size(12.0));
+                ui.add_space(6.0);
+
+                // Axis selector for interactive scatter plot
+                ui.horizontal_wrapped(|ui| {
+                    ui.label(RichText::new("Projeksjon:").size(11.5));
+                    let axis_lbl = match self.plot_axis_mode {
+                        PlotAxisMode::Pca2D => "PCA 2D (PC1 vs PC2)".to_string(),
+                        PlotAxisMode::RawColumns(x, y) => format!(
+                            "{} vs {}",
+                            prep.raw_numeric_names.get(x).map(|s| s.as_str()).unwrap_or("X"),
+                            prep.raw_numeric_names.get(y).map(|s| s.as_str()).unwrap_or("Y"),
+                        ),
+                    };
+                    let axis_w = (ui.available_width() - 80.0).clamp(130.0, 240.0);
+                    egui::ComboBox::from_id_salt("plot_axis_combo")
+                        .width(axis_w)
+                        .truncate()
+                        .selected_text(axis_lbl)
+                        .show_ui(ui, |ui| {
+                            ui.selectable_value(&mut self.plot_axis_mode, PlotAxisMode::Pca2D, "PCA 2D (PC1 vs PC2)");
+                            let m = prep.raw_numeric_names.len().min(6);
+                            for a in 0..m {
+                                for b in (a + 1)..m {
+                                    ui.selectable_value(
+                                        &mut self.plot_axis_mode,
+                                        PlotAxisMode::RawColumns(a, b),
+                                        format!("{} vs {}", prep.raw_numeric_names[a], prep.raw_numeric_names[b]),
+                                    );
+                                }
+                            }
+                        });
+                });
+
+                ui.add_space(4.0);
+                draw_egui_scatter(ui, &prep, &r.labels, self.plot_axis_mode, 250.0);
+                ui.add_space(8.0);
+
+                // Metrics grid (constrained column width so values never overflow right edge)
+                let col_max = (ui.available_width() * 0.62).max(110.0);
+                egui::Grid::new("inspector_metrics")
+                    .striped(true)
+                    .num_columns(2)
+                    .max_col_width(col_max)
+                    .spacing([12.0, 4.0])
+                    .show(ui, |ui| {
+                        let rows = [
+                            ("Antall klynger (k)", format!("{}", r.metrics.n_clusters)),
+                            ("Støypunkter (-1)", format!("{} ({:.1}%)", r.metrics.n_noise, r.metrics.noise_ratio * 100.0)),
+                            ("Silhouette-score [-1..1]", r.metrics.silhouette.map(|v| format!("{:.4}", v)).unwrap_or_else(|| "—".into())),
+                            ("Davies-Bouldin (lavere=bedre)", r.metrics.davies_bouldin.map(|v| format!("{:.4}", v)).unwrap_or_else(|| "—".into())),
+                            ("Calinski-Harabasz (høyere=bedre)", r.metrics.calinski_harabasz.map(|v| format!("{:.2}", v)).unwrap_or_else(|| "—".into())),
+                            ("Dunn-indeks", r.metrics.dunn_index.map(|v| format!("{:.4}", v)).unwrap_or_else(|| "—".into())),
+                            ("Inertia (SSE)", format!("{:.2}", r.metrics.inertia_sse)),
+                            ("Balanse-entropi [0..1]", format!("{:.3}", r.metrics.balance_entropy)),
+                            ("Kjøretid", format!("{:.2} ms", r.duration_ms)),
+                        ];
+                        for (k, v) in rows {
+                            ui.label(RichText::new(k).size(11.5).color(self.muted_color()));
+                            ui.label(RichText::new(v).strong().size(11.5));
+                            ui.end_row();
+                        }
+                        if let Some(ari) = r.metrics.adjusted_rand_index {
+                            ui.label(RichText::new("Adjusted Rand Index (fasit)").size(11.5).color(self.muted_color()));
+                            ui.label(RichText::new(format!("{:.4}", ari)).strong().size(11.5).color(Color32::from_rgb(37, 99, 235)));
+                            ui.end_row();
+                        }
+                    });
+
+                ui.add_space(6.0);
+                ui.label(RichText::new("Klyngestørrelser:").strong().size(11.5));
+                ui.horizontal_wrapped(|ui| {
+                    for (cid, &sz) in r.metrics.cluster_sizes.iter().enumerate() {
+                        let c = CLUSTER_PALETTE_U8[cid % CLUSTER_PALETTE_U8.len()];
+                        egui::Frame::new()
+                            .fill(Color32::from_rgb(c[0], c[1], c[2]).gamma_multiply(0.18))
+                            .stroke(Stroke::new(1.0_f32, Color32::from_rgb(c[0], c[1], c[2])))
+                            .corner_radius(CornerRadius::same(4))
+                            .inner_margin(Margin::symmetric(6, 2))
+                            .show(ui, |ui| {
+                                ui.label(RichText::new(format!("C{}: {}", cid, sz)).size(10.5).strong());
+                            });
+                    }
+                });
+
+                ui.add_space(6.0);
+                ui.label(RichText::new(format!("Parametere: {}", r.params_summary)).size(11.0).color(self.muted_color()));
+                if !r.note.is_empty() {
+                    ui.label(RichText::new(format!("Merknad: {}", r.note)).italics().size(11.0).color(self.muted_color()));
+                }
+            });
+        }
     }
 
     // =========================================================================
@@ -1469,13 +1589,15 @@ impl ClusterOverviewApp {
         let Some(prep) = self.last_prepared.clone() else { return };
 
         egui::ScrollArea::vertical().show(ui, |ui| {
-            // Algorithm A & B pickers
+            // Algorithm A & B pickers (wraps cleanly on narrow screens)
             self.card_frame().show(ui, |ui| {
-                ui.horizontal(|ui| {
+                let cb_w = (ui.available_width() * 0.34).clamp(150.0, 260.0);
+                ui.horizontal_wrapped(|ui| {
                     ui.label(RichText::new("Algoritme A:").strong());
                     let cur_a = self.results.iter().find(|r| r.id == self.compare_a_id).unwrap_or(&self.results[0]);
                     egui::ComboBox::from_id_salt("cmp_a")
-                        .width(260.0)
+                        .width(cb_w)
+                        .truncate()
                         .selected_text(format!("#{:03} {}", cur_a.id, cur_a.name))
                         .show_ui(ui, |ui| {
                             for r in &self.results {
@@ -1483,11 +1605,12 @@ impl ClusterOverviewApp {
                             }
                         });
 
-                    ui.add_space(20.0);
+                    ui.add_space(10.0);
                     ui.label(RichText::new("Algoritme B:").strong());
                     let cur_b = self.results.iter().find(|r| r.id == self.compare_b_id).unwrap_or(&self.results[1]);
                     egui::ComboBox::from_id_salt("cmp_b")
-                        .width(260.0)
+                        .width(cb_w)
+                        .truncate()
                         .selected_text(format!("#{:03} {}", cur_b.id, cur_b.name))
                         .show_ui(ui, |ui| {
                             for r in &self.results {
@@ -1502,32 +1625,41 @@ impl ClusterOverviewApp {
             let rb = self.results.iter().find(|r| r.id == self.compare_b_id).unwrap_or(&self.results[1]).clone();
             let ari_ab = adjusted_rand_index(&ra.labels, &rb.labels);
 
-            ui.columns(2, |cols| {
-                for (i, r) in [&ra, &rb].iter().enumerate() {
-                    self.card_frame().show(&mut cols[i], |ui| {
-                        ui.label(RichText::new(format!("#{:03} {}", r.id, r.name)).strong().size(14.0).color(self.heading_color()));
-                        ui.label(RichText::new(&r.description_no).size(11.0).color(self.muted_color()));
-                        ui.add_space(4.0);
-                        draw_egui_scatter(ui, &prep, &r.labels, self.plot_axis_mode, 250.0);
-                        ui.add_space(4.0);
-                        ui.label(
-                            RichText::new(format!(
-                                "k={}  •  Silhouette: {}  •  DBI: {}  •  Tid: {:.1} ms",
-                                r.metrics.n_clusters,
-                                r.metrics.silhouette.map(|v| format!("{:.3}", v)).unwrap_or_else(|| "—".into()),
-                                r.metrics.davies_bouldin.map(|v| format!("{:.2}", v)).unwrap_or_else(|| "—".into()),
-                                r.duration_ms
-                            ))
-                            .strong()
-                            .size(11.5),
-                        );
-                    });
-                }
-            });
+            let draw_cmp_card = |ui: &mut egui::Ui, r: &AlgorithmRunResult| {
+                self.card_frame().show(ui, |ui| {
+                    ui.label(RichText::new(format!("#{:03} {}", r.id, r.name)).strong().size(14.0).color(self.heading_color()));
+                    ui.label(RichText::new(&r.description_no).size(11.0).color(self.muted_color()));
+                    ui.add_space(4.0);
+                    draw_egui_scatter(ui, &prep, &r.labels, self.plot_axis_mode, 240.0);
+                    ui.add_space(4.0);
+                    ui.label(
+                        RichText::new(format!(
+                            "k={}  •  Silhouette: {}  •  DBI: {}  •  Tid: {:.1} ms",
+                            r.metrics.n_clusters,
+                            r.metrics.silhouette.map(|v| format!("{:.3}", v)).unwrap_or_else(|| "—".into()),
+                            r.metrics.davies_bouldin.map(|v| format!("{:.2}", v)).unwrap_or_else(|| "—".into()),
+                            r.duration_ms
+                        ))
+                        .strong()
+                        .size(11.5),
+                    );
+                });
+            };
+
+            if ui.available_width() >= 640.0 {
+                ui.columns(2, |cols| {
+                    draw_cmp_card(&mut cols[0], &ra);
+                    draw_cmp_card(&mut cols[1], &rb);
+                });
+            } else {
+                draw_cmp_card(ui, &ra);
+                ui.add_space(8.0);
+                draw_cmp_card(ui, &rb);
+            }
 
             ui.add_space(8.0);
             self.card_frame().show(ui, |ui| {
-                ui.horizontal(|ui| {
+                ui.horizontal_wrapped(|ui| {
                     ui.label(RichText::new("Enighet mellom A og B (Adjusted Rand Index):").strong().size(13.0));
                     ui.label(
                         RichText::new(format!("{:.4}", ari_ab))
@@ -1564,23 +1696,24 @@ impl ClusterOverviewApp {
                 );
                 ui.add_space(10.0);
 
-                egui::Grid::new("pdf_cfg_grid").num_columns(2).spacing([14.0, 8.0]).show(ui, |ui| {
+                let field_w = (ui.available_width() - 155.0).clamp(160.0, 460.0);
+                egui::Grid::new("pdf_cfg_grid").num_columns(2).spacing([12.0, 8.0]).show(ui, |ui| {
                     ui.label(RichText::new("Rapporttittel:").strong());
-                    ui.add(egui::TextEdit::singleline(&mut self.pdf_opts.title).desired_width(420.0));
+                    ui.add(egui::TextEdit::singleline(&mut self.pdf_opts.title).desired_width(field_w));
                     ui.end_row();
 
                     ui.label(RichText::new("Undertittel:").strong());
-                    ui.add(egui::TextEdit::singleline(&mut self.pdf_opts.subtitle).desired_width(420.0));
+                    ui.add(egui::TextEdit::singleline(&mut self.pdf_opts.subtitle).desired_width(field_w));
                     ui.end_row();
 
                     ui.label(RichText::new("Forfatter / Org.:").strong());
-                    ui.add(egui::TextEdit::singleline(&mut self.pdf_opts.author).desired_width(420.0));
+                    ui.add(egui::TextEdit::singleline(&mut self.pdf_opts.author).desired_width(field_w));
                     ui.end_row();
 
                     ui.label(RichText::new("Merknader (forside):").strong());
                     ui.add(
                         egui::TextEdit::multiline(&mut self.pdf_opts.notes)
-                            .desired_width(420.0)
+                            .desired_width(field_w)
                             .desired_rows(3)
                             .hint_text("Valgfrie kommentarer eller metodebeskrivelse som vises nederst på forsiden..."),
                     );
@@ -1610,7 +1743,7 @@ impl ClusterOverviewApp {
                 );
                 ui.add_space(10.0);
 
-                ui.horizontal(|ui| {
+                ui.horizontal_wrapped(|ui| {
                     let enabled = !self.results.is_empty() && self.bg_run.is_none();
                     let btn = egui::Button::new(
                         RichText::new("Generer og lagre PDF-rapport...")
@@ -1623,7 +1756,7 @@ impl ClusterOverviewApp {
                     } else {
                         Color32::from_rgb(148, 163, 184)
                     })
-                    .min_size(Vec2::new(240.0, 36.0));
+                    .min_size(Vec2::new(210.0, 36.0));
                     if ui.add_enabled(enabled, btn).clicked() {
                         self.export_pdf_dialog();
                     }
@@ -1674,7 +1807,7 @@ fn draw_egui_scatter(
     };
 
     let (rect, response) = ui.allocate_exact_size(
-        Vec2::new(ui.available_width().max(180.0), height),
+        Vec2::new(ui.available_width().max(120.0), height),
         egui::Sense::hover(),
     );
     let painter = ui.painter_at(rect);

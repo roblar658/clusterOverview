@@ -177,3 +177,33 @@ cargo test
 ```
 
 Testsuiten verifiserer at samtlige 200 algoritmer er riktig registrert i rekkefølge (`1..=200`), kjører feilfritt på innebygd datasett og produserer en gyldig flersidig vektor-PDF.
+
+---
+
+## Windows-installasjon (WiX v4 MSI)
+
+Prosjektet inkluderer komplett **WiX Toolset v4** konfigurasjon i `wix/` som bygger et ferdig Windows-installasjonsprogram (`.msi`) med lisensvisning, valg av installasjonsmappe, Start-meny-snarvei, skrivebordssnarvei og eksempelfiler (`sample_data/`).
+
+### Forutsetninger for MSI-bygging
+- [WiX Toolset v4](https://wixtoolset.org/) (`dotnet tool install --global wix`)
+- UI-utvidelsen (`wix extension add -g WixToolset.UI.wixext`)
+
+### Bygge `.msi`-installasjonsfilen
+```powershell
+.\wix\build_msi.ps1 -Profile release
+```
+
+(Bruk `-Profile debug` dersom du vil pakke en rask debug-build uten å kompilere en separat release-target.)
+
+Ferdig installasjonsfil genereres til:
+```text
+wix\out\ClusterOverview-1.0.0-x64.msi
+```
+
+---
+
+## Lisens og opphavsrett
+
+Copyright © 2026 **Robert Larsen**.
+
+Utgitt under **MIT-lisensen** — se [LICENSE](LICENSE) for fullstendige vilkår.

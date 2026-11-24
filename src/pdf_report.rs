@@ -26,7 +26,7 @@ impl Default for PdfReportOptions {
         Self {
             title: "ClusterOverview — Klyngeanalyserapport".to_string(),
             subtitle: "Komparativ evaluering av klyngealgoritmer".to_string(),
-            author: "ClusterOverview (Rust)".to_string(),
+            author: "Robert Larsen".to_string(),
             notes: String::new(),
             include_scatter_cards: true,
             include_appendix_table: true,
@@ -382,7 +382,7 @@ fn draw_chrome(pb: &mut PageBuilder, header_right: &str, page_num: usize, total_
         7.5,
         FontKind::Regular,
         rgb(100, 116, 139),
-        "Generert med ClusterOverview (Native Rust) — 200 klyngealgoritmer",
+        "© 2026 Robert Larsen  —  ClusterOverview (Native Rust, 200 klyngealgoritmer)",
     );
     pb.text_right(
         PAGE_W - MARGIN_X,
