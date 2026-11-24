@@ -1,0 +1,6 @@
+/target
+**/*.rs.bk
+*.pdb
+*.log
+bingo_2024_rapport.pdf
+clusterOverview_rapport_*.pdf
