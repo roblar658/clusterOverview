@@ -15,6 +15,13 @@
 
 ---
 
+## Bilder
+
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/2a9ee11c-3bc1-4c9f-9ee2-b4e25d8995d7" />
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/00c9cc69-5fe9-48dd-92d9-a47ea55dac55" />
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/9cd48c2b-bb13-4f4c-89cf-be0fd6378d2f" />
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/5ad38a52-578f-4ebf-85f6-f65e4ad360ef" />
+
 ## Systemarkitektur
 
 ```mermaid
