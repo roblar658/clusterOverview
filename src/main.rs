@@ -53,6 +53,8 @@ fn run_cli(args: &[String]) -> Result<(), Box<dyn std::error::Error>> {
 
     let mut csv_path: Option<PathBuf> = None;
     let mut pdf_path: Option<PathBuf> = None;
+    let mut metrics_csv_path: Option<PathBuf> = None;
+    let mut skip_pdf = false;
     let mut target_k: Option<usize> = None;
     let mut max_samples = 240usize;
     let mut compact = false;
@@ -67,6 +69,14 @@ fn run_cli(args: &[String]) -> Result<(), Box<dyn std::error::Error>> {
             "--pdf" if i + 1 < args.len() => {
                 pdf_path = Some(PathBuf::from(&args[i + 1]));
                 i += 2;
+            }
+            "--metrics-csv" if i + 1 < args.len() => {
+                metrics_csv_path = Some(PathBuf::from(&args[i + 1]));
+                i += 2;
+            }
+            "--skip-pdf" => {
+                skip_pdf = true;
+                i += 1;
             }
             "--k" if i + 1 < args.len() => {
                 target_k = args[i + 1].parse().ok();
@@ -125,12 +135,49 @@ fn run_cli(args: &[String]) -> Result<(), Box<dyn std::error::Error>> {
         results.len()
     );
 
-    let mut opts = PdfReportOptions::default();
-    opts.subtitle = format!("Datasett: {} ({} rader, {} kolonner)", raw.display_name, raw.rows.len(), raw.columns.len());
-    opts.include_scatter_cards = !compact;
+    if let Some(mpath) = metrics_csv_path {
+        use std::fmt::Write as _;
+        let mut out = String::from(
+            "id,cat_num,category,name,n_clusters,n_noise,noise_ratio,silhouette,davies_bouldin,calinski_harabasz,dunn_index,inertia_sse,balance_entropy,ari,duration_ms\n",
+        );
+        for r in &results {
+            let opt = |v: Option<f64>| v.map(|x| format!("{:.6}", x)).unwrap_or_default();
+            let safe_name = r.name.replace('"', "\"\"");
+            let _ = writeln!(
+                out,
+                "{},{},\"{}\",\"{}\",{},{},{:.6},{},{},{},{},{:.6},{:.6},{},{:.4}",
+                r.id,
+                r.category.number(),
+                r.category.short_name_no(),
+                safe_name,
+                r.metrics.n_clusters,
+                r.metrics.n_noise,
+                r.metrics.noise_ratio,
+                opt(r.metrics.silhouette),
+                opt(r.metrics.davies_bouldin),
+                opt(r.metrics.calinski_harabasz),
+                opt(r.metrics.dunn_index),
+                r.metrics.inertia_sse,
+                r.metrics.balance_entropy,
+                opt(r.metrics.adjusted_rand_index),
+                r.duration_ms
+            );
+        }
+        if let Some(parent) = mpath.parent() {
+            let _ = std::fs::create_dir_all(parent);
+        }
+        std::fs::write(&mpath, out)?;
+        println!("Metrikker skrevet til '{}'.", mpath.display());
+    }
 
-    let pages = generate_pdf_report(&pdf_p, &raw, &prepared, &results, &opts)?;
-    println!("PDF-rapport skrevet til '{}' ({} sider).", pdf_p.display(), pages);
+    if !skip_pdf {
+        let mut opts = PdfReportOptions::default();
+        opts.subtitle = format!("Datasett: {} ({} rader, {} kolonner)", raw.display_name, raw.rows.len(), raw.columns.len());
+        opts.include_scatter_cards = !compact;
+
+        let pages = generate_pdf_report(&pdf_p, &raw, &prepared, &results, &opts)?;
+        println!("PDF-rapport skrevet til '{}' ({} sider).", pdf_p.display(), pages);
+    }
     Ok(())
 }
 

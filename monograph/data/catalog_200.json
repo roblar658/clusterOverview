@@ -1,0 +1,1602 @@
+[
+  {
+    "id": 1,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "K-Means (Lloyd's algoritme)",
+    "desc_no": "Minimerer kvadrert euklidsk avstand til klyngens gjennomsnitt."
+  },
+  {
+    "id": 2,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "K-Means++",
+    "desc_no": "Sannsynlighetsbasert initialisering av startsentroider for bedre konvergens."
+  },
+  {
+    "id": 3,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Mini-Batch K-Means",
+    "desc_no": "Bruker tilfeldige delutvalg per iterasjon for høy skalerbarhet."
+  },
+  {
+    "id": 4,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "K-Medoids (PAM)",
+    "desc_no": "Bruker faktiske datapunkter (medoider) som sentre; robust mot uteliggere."
+  },
+  {
+    "id": 5,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "CLARA",
+    "desc_no": "Skalerbar utvidelse av PAM basert på utvalg fra store datasett."
+  },
+  {
+    "id": 6,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "CLARANS",
+    "desc_no": "Kombinerer CLARA med randomisert grafsøk for global optimering."
+  },
+  {
+    "id": 7,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "K-Modes",
+    "desc_no": "Bruker typetall (modus) og Hamming-avstand for rent kategoriske data."
+  },
+  {
+    "id": 8,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "K-Prototypes",
+    "desc_no": "Kombinerer K-Means og K-Modes for blandede numeriske og kategoriske data."
+  },
+  {
+    "id": 9,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Bisecting K-Means",
+    "desc_no": "Top-down hybrid som rekursivt splitter klynger i to med K-Means."
+  },
+  {
+    "id": 10,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "X-Means",
+    "desc_no": "Estimerer optimalt antall klynger (k) automatisk ved hjelp av BIC."
+  },
+  {
+    "id": 11,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "G-Means",
+    "desc_no": "Splitter klynger rekursivt inntil fordelingen i hver klynge passerer en normalfordelingstest."
+  },
+  {
+    "id": 12,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Spherical K-Means",
+    "desc_no": "Bruker cosinus-likhet på normaliserte vektorer; standard for tekst og embeddings."
+  },
+  {
+    "id": 13,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Elkan's K-Means",
+    "desc_no": "Akselererer eksakt K-Means ved å bruke trekantulikheten for å unngå unødvendige avstandsberegninger."
+  },
+  {
+    "id": 14,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Hamerly's K-Means",
+    "desc_no": "Minneeffektiv variant av Elkan's algoritme med kun øvre og nedre grenser per punkt."
+  },
+  {
+    "id": 15,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "K-Medians",
+    "desc_no": "Bruker medianen langs hver akse i stedet for gjennomsnitt; minimerer L1-avstand."
+  },
+  {
+    "id": 16,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Kernel K-Means",
+    "desc_no": "Projiserer data til et høydimensjonalt funksjonsrom via en kjernefunksjon for ikke-lineære grenser."
+  },
+  {
+    "id": 17,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Global K-Means",
+    "desc_no": "Deterministisk inkrementell algoritme som legger til én og én sentroide gjennom systematisk søk."
+  },
+  {
+    "id": 18,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "ISODATA",
+    "desc_no": "Iterativ partisjoneringsalgoritme som dynamisk splitter og slår sammen klynger basert på terskelverdier."
+  },
+  {
+    "id": 19,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Hartigan-Wong K-Means",
+    "desc_no": "Oppdaterer sentroider umiddelbart etter hvert enkelt punkts reallokering."
+  },
+  {
+    "id": 20,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "COP-KMeans (Constrained K-Means)",
+    "desc_no": "Inkluderer must-link- og cannot-link-begrensninger for semi-veiledet læring."
+  },
+  {
+    "id": 21,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "MacQueen's K-Means",
+    "desc_no": "Sekvensiell/online variant som oppdaterer sentroidene etter hvert eneste datapunkt."
+  },
+  {
+    "id": 22,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Forgy's K-Means",
+    "desc_no": "Batch-variant med tilfeldig valgte datapunkter som startsentroider."
+  },
+  {
+    "id": 23,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "K-Means|| (Scalable K-Means++)",
+    "desc_no": "Parallelliserbar variant av K-Means++ som sampler flere sentroider per runde."
+  },
+  {
+    "id": 24,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "FastPAM / FasterPAM",
+    "desc_no": "Optimerte versjoner av PAM som reduserer tidskompleksiteten fra O(k(n-k)²) til O((n-k)²)."
+  },
+  {
+    "id": 25,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "CLARA-MED",
+    "desc_no": "Median-basert variant av CLARA for økt robusthet mot ekstreme verdier."
+  },
+  {
+    "id": 26,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Trimmed K-Means",
+    "desc_no": "Ekskluderer en gitt andel (alpha) av de mest avvikende punktene i hver iterasjon."
+  },
+  {
+    "id": 27,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Power K-Means",
+    "desc_no": "Bruker potensgjennomsnitt (power means) for å unngå dårlige lokale minima."
+  },
+  {
+    "id": 28,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "W-K-Means (Weighted K-Means)",
+    "desc_no": "Lærer automatisk vekter for hver variabel basert på varians innen klyngene."
+  },
+  {
+    "id": 29,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "Minkowski Weighted K-Means",
+    "desc_no": "Bruker vektet Minkowski-metrikk for automatisk variabelseleksjon."
+  },
+  {
+    "id": 30,
+    "cat_num": 1,
+    "cat_enum": "Centroid",
+    "category": "Cat. I: Centroid & Partitioning",
+    "name": "LBG-algoritmen (Linde-Buzo-Gray)",
+    "desc_no": "Vektorkvantiseringsvariant av K-Means utviklet for signal- og lydkomprimering."
+  },
+  {
+    "id": 31,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "DBSCAN",
+    "desc_no": "Finner klynger av vilkårlig form basert på eps-nabolag og minPts, og isolerer støy."
+  },
+  {
+    "id": 32,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "HDBSCAN",
+    "desc_no": "Hierarkisk utvidelse av DBSCAN som håndterer klynger med varierende tetthet."
+  },
+  {
+    "id": 33,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "OPTICS",
+    "desc_no": "Genererer en ordnet rekkeviddegraf for å avdekke tetthetsstrukturer på flere nivåer."
+  },
+  {
+    "id": 34,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "Mean Shift",
+    "desc_no": "Flytter et kjerne-vindu mot lokale tetthetstopper (mode-seeking)."
+  },
+  {
+    "id": 35,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "DENCLUE",
+    "desc_no": "Modellerer tetthet analytisk som summen av kjernefunksjoner og finner lokale maksima."
+  },
+  {
+    "id": 36,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "SNN (Shared Nearest Neighbor)",
+    "desc_no": "Baserer likhet på delte nærmeste naboer for høy dimensjonalitet."
+  },
+  {
+    "id": 37,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "PDBSCAN",
+    "desc_no": "Parallellisert og distribuert variant av DBSCAN for store regneklynger."
+  },
+  {
+    "id": 38,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "DBCLASD",
+    "desc_no": "Ikke-parametrisk tetthetsalgoritme basert på sannsynlighetsfordelingen til nærmeste-nabo-avstander."
+  },
+  {
+    "id": 39,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "GDBSCAN",
+    "desc_no": "Generaliserer DBSCAN til vilkårlige nabolagspredikater og vektede punkter."
+  },
+  {
+    "id": 40,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "ST-DBSCAN",
+    "desc_no": "Utvidelse for rom-tid-data (spatiotemporal) med separate terskler for rom og tid."
+  },
+  {
+    "id": 41,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "Quickshift",
+    "desc_no": "Rask kjernebasert modus-søkende algoritme som kobler punkter til nærmeste nabo med høyere tetthet."
+  },
+  {
+    "id": 42,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "Medoidshift",
+    "desc_no": "Approksimerer Mean Shift ved å begrense skiftene til eksisterende datapunkter."
+  },
+  {
+    "id": 43,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "DENCLUE 2.0",
+    "desc_no": "Raskere versjon av DENCLUE med adaptiv steglengde i bakkeklatringen."
+  },
+  {
+    "id": 44,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "K-DBSCAN",
+    "desc_no": "Kombinerer K-Means for grov partisjonering med DBSCAN for finmasket tetthetsdeteksjon."
+  },
+  {
+    "id": 45,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "RNN-DBSCAN",
+    "desc_no": "Bruker Reverse Nearest Neighbors for å håndtere klynger med stor tetthetsforskjell."
+  },
+  {
+    "id": 46,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "DeBaCl",
+    "desc_no": "Estimerer nivåsett-trær (level set trees) for ikke-parametrisk tetthetsclustering."
+  },
+  {
+    "id": 47,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "DBSCAN++",
+    "desc_no": "Akselererer DBSCAN ved kun å beregne tetthet for et delutvalg av kjernedatapunkter."
+  },
+  {
+    "id": 48,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "GriDBSCAN",
+    "desc_no": "Bruker et rutenett for å partisjonere rommet før lokal DBSCAN-kjøring."
+  },
+  {
+    "id": 49,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "MR-DBSCAN",
+    "desc_no": "MapReduce-basert implementasjon av DBSCAN for distribuert stordata."
+  },
+  {
+    "id": 50,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "VDBSCAN",
+    "desc_no": "Varied-Density DBSCAN som beregner ulike eps-verdier basert på k-dist-plott."
+  },
+  {
+    "id": 51,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "DPC (Density Peaks Clustering)",
+    "desc_no": "Identifiserer klyngesentre som punkter med høy lokal tetthet og stor avstand til punkter med høyere tetthet."
+  },
+  {
+    "id": 52,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "SNN-DPC",
+    "desc_no": "Forbedrer Density Peaks Clustering ved å bruke Shared Nearest Neighbors for tetthetsestimering."
+  },
+  {
+    "id": 53,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "OPTICS-OF",
+    "desc_no": "Kombinerer OPTICS med en lokal uteliggerfaktor (Outlier Factor) for anomalideteksjon."
+  },
+  {
+    "id": 54,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "Blurring Mean Shift",
+    "desc_no": "Oppdaterer selve datasettet i hver iterasjon for raskere konvergens enn standard Mean Shift."
+  },
+  {
+    "id": 55,
+    "cat_num": 2,
+    "cat_enum": "Density",
+    "category": "Cat. II: Density & Mode-Seeking",
+    "name": "Mean Shift++",
+    "desc_no": "Rutenettakselerert variant av Mean Shift med lineær kompleksitet i antall punkter."
+  },
+  {
+    "id": 56,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Single Linkage (SLINK)",
+    "desc_no": "Slår sammen klynger basert på korteste avstand mellom to punkter."
+  },
+  {
+    "id": 57,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Complete Linkage (CLINK)",
+    "desc_no": "Slår sammen klynger basert på lengste avstand mellom to punkter."
+  },
+  {
+    "id": 58,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Average Linkage (UPGMA)",
+    "desc_no": "Bruker gjennomsnittlig parvis avstand mellom alle punkter i to klynger."
+  },
+  {
+    "id": 59,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Ward's Method",
+    "desc_no": "Minimerer økningen i total kvadrert feil (varians) ved sammenslåing."
+  },
+  {
+    "id": 60,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "WPGMA",
+    "desc_no": "Vektet parvis gruppering med aritmetisk gjennomsnitt for fylogenetiske trær."
+  },
+  {
+    "id": 61,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Centroid Linkage (UPGMC)",
+    "desc_no": "Slår sammen klyngene med kortest avstand mellom sine sentroider."
+  },
+  {
+    "id": 62,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Median Linkage (WPGMC)",
+    "desc_no": "Bruker vektet sentroideavstand uavhengig av klyngestørrelse."
+  },
+  {
+    "id": 63,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "DIANA",
+    "desc_no": "Divisiv (top-down) hierarkisk algoritme som splitter klyngen med størst diameter."
+  },
+  {
+    "id": 64,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "BIRCH",
+    "desc_no": "Bygger et minneeffektivt Clustering Feature Tree i én gjennomlesning av data."
+  },
+  {
+    "id": 65,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "CURE",
+    "desc_no": "Representerer klynger med spredte punkter som krympes mot sentrum for ikke-sfæriske former."
+  },
+  {
+    "id": 66,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "CHAMELEON",
+    "desc_no": "To-stegs algoritme som kombinerer k-NN-grafpartisjonering med dynamisk sammenslåing."
+  },
+  {
+    "id": 67,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "ROCK",
+    "desc_no": "Hierarkisk algoritme for kategoriske data basert på antall felles naboer (links)."
+  },
+  {
+    "id": 68,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "MONA",
+    "desc_no": "Divisiv algoritme for binære data som splitter basert på én variabel om gangen."
+  },
+  {
+    "id": 69,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Genie",
+    "desc_no": "Hierarkisk algoritme som kobler Single Linkage med en Gini-indeks-begrensning."
+  },
+  {
+    "id": 70,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "HCA-DBSCAN",
+    "desc_no": "Hybrid som bruker hierarkisk kobling på tetthetskjerner."
+  },
+  {
+    "id": 71,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "BUBBLE",
+    "desc_no": "Utvidelse av BIRCH for vilkårlige metriske rom uten euklidske koordinater."
+  },
+  {
+    "id": 72,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Lance-Williams algoritme",
+    "desc_no": "Generell rekursiv formel som forener de fleste agglomerative koblingsmetoder."
+  },
+  {
+    "id": 73,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Minimax Linkage",
+    "desc_no": "Velger klyngens sentrum som det punktet som minimerer maksimal avstand til alle andre punkter i klyngen."
+  },
+  {
+    "id": 74,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Flexible Beta Linkage",
+    "desc_no": "Parametrisk koblingsmetode fra Lance-Williams-familien der beta styrer romutvidelse/sammentrekning."
+  },
+  {
+    "id": 75,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Neighbor-Joining (NJ)",
+    "desc_no": "Bunn-opp trebyggingsalgoritme brukt i bioinformatikk som tillater ulike evolusjonsrater."
+  },
+  {
+    "id": 76,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "PERCH",
+    "desc_no": "Inkrementell hierarkisk algoritme for ekstreme antall klynger (extreme clustering)."
+  },
+  {
+    "id": 77,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "GRINCH",
+    "desc_no": "Inkrementell hierarkisk algoritme med grafting og rotasjon for å rette opp tidlige feil."
+  },
+  {
+    "id": 78,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "BICO",
+    "desc_no": "Kombinerer BIRCH med coresets for å gi matematiske kvalitetsgarantier på K-Means-kostnaden."
+  },
+  {
+    "id": 79,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "SCC (Sub-Cluster Component)",
+    "desc_no": "Skalerbar hierarkisk algoritme basert på gjensidig nærmeste nabo (reciprocal nearest neighbors)."
+  },
+  {
+    "id": 80,
+    "cat_num": 3,
+    "cat_enum": "Hierarchical",
+    "category": "Cat. III: Hierarchical & Tree-Based",
+    "name": "Finch",
+    "desc_no": "Parameterfri hierarkisk algoritme basert på første-nabo-relasjoner (first neighbor relations)."
+  },
+  {
+    "id": 81,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Gaussian Mixture Models (GMM)",
+    "desc_no": "Modellerer data som en blanding av normalfordelinger optimert med EM."
+  },
+  {
+    "id": 82,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Bayesian GMM (DPGMM)",
+    "desc_no": "Bruker en Dirichlet-prosess prior for automatisk å utlede antall klynger."
+  },
+  {
+    "id": 83,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Latent Dirichlet Allocation (LDA)",
+    "desc_no": "Generativ sannsynlighetsmodell for myk clustering av tekst i latente emner."
+  },
+  {
+    "id": 84,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "pLSA",
+    "desc_no": "Statistisk emnemodell som faktoriserer dokument-term-matrisen sannsynlighetsbasert."
+  },
+  {
+    "id": 85,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "COBWEB",
+    "desc_no": "Inkrementell konseptuell clustering som maksimerer category utility i et beslutningstre."
+  },
+  {
+    "id": 86,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "CLASSIT",
+    "desc_no": "Kontinuerlig utvidelse av COBWEB for numeriske attributter."
+  },
+  {
+    "id": 87,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "AutoClass",
+    "desc_no": "Bayesiansk blandingsmodell som håndterer både diskrete og kontinuerlige variabler."
+  },
+  {
+    "id": 88,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Student's t-Mixture Models (TMM)",
+    "desc_no": "Bruker tunghalede t-fordelinger for økt robusthet mot uteliggere."
+  },
+  {
+    "id": 89,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "von Mises-Fisher Mixture Models (vMF)",
+    "desc_no": "Sannsynlighetsmodell for retningsdata på en hypersfære."
+  },
+  {
+    "id": 90,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Latent Class Analysis (LCA)",
+    "desc_no": "Statistisk modell for å avdekke skjulte undergrupper i kategoriske data."
+  },
+  {
+    "id": 91,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Hierarchical Dirichlet Process (HDP)",
+    "desc_no": "Ikke-parametrisk bayesiansk utvidelse av LDA for grupperte data."
+  },
+  {
+    "id": 92,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "NMF (Non-Negative Matrix Factorization)",
+    "desc_no": "Faktoriserer ikke-negative matriser for myk klyngetilhørighet."
+  },
+  {
+    "id": 93,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "MCLUST",
+    "desc_no": "Modellbasert clustering som velger optimal kovariansstruktur (EII, VII, VVV osv.) via BIC."
+  },
+  {
+    "id": 94,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Mixmod",
+    "desc_no": "Rammeverk for modellbasert clustering med parsimoniske gaussiske og multinomiske modeller."
+  },
+  {
+    "id": 95,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Poisson Mixture Models",
+    "desc_no": "Sannsynlighetsmodell tilpasset telledata og diskrete hendelsesfrekvenser."
+  },
+  {
+    "id": 96,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Bernoulli Mixture Models",
+    "desc_no": "Blandingsmodell for binære data og dokument-term-forekomster."
+  },
+  {
+    "id": 97,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Dirichlet Multinomial Mixture (DMM)",
+    "desc_no": "Spesialisert sannsynlighetsmodell for clustering av korte tekster (f.eks. tweets)."
+  },
+  {
+    "id": 98,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Skew-Normal Mixture Models",
+    "desc_no": "Modellbasert clustering for skjevfordelte data."
+  },
+  {
+    "id": 99,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Infinite Gaussian Mixture Model (IGMM)",
+    "desc_no": "Ikke-parametrisk bayesiansk GMM basert på Chinese Restaurant Process."
+  },
+  {
+    "id": 100,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Correlated Topic Model (CTM)",
+    "desc_no": "Utvider LDA ved å bruke logistisk normalfordeling for å modellere korrelasjon mellom emner."
+  },
+  {
+    "id": 101,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "Biterm Topic Model (BTM)",
+    "desc_no": "Modellerer ordpar (biterms) i hele korpuset for bedre clustering av korte tekster."
+  },
+  {
+    "id": 102,
+    "cat_num": 4,
+    "cat_enum": "Distribution",
+    "category": "Cat. IV: Distribution, Statistical & Topic",
+    "name": "SNOB",
+    "desc_no": "Tidlig statistisk blandingsmodell basert på Minimum Message Length (MML)."
+  },
+  {
+    "id": 103,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Spectral Clustering (Ng-Jordan-Weiss)",
+    "desc_no": "Bruker normalisert Laplace-matrise og egenvektorer før K-Means."
+  },
+  {
+    "id": 104,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Normalized Cuts (Ncut)",
+    "desc_no": "Spektral grafpartisjonering av Shi og Malik for bildesegmentering og grafer."
+  },
+  {
+    "id": 105,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Ratio Cut",
+    "desc_no": "Spektral partisjonering som minimerer kantkutt delt på antall noder i klyngen."
+  },
+  {
+    "id": 106,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Affinity Propagation",
+    "desc_no": "Velger representative exemplars via meldingsutveksling (responsibility og availability)."
+  },
+  {
+    "id": 107,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Louvain Method",
+    "desc_no": "Grådig modularitetsoptimering for samfunnsdeteksjon i store grafer."
+  },
+  {
+    "id": 108,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Leiden Algorithm",
+    "desc_no": "Forbedrer Louvain ved å garantere internt sammenhengende klynger."
+  },
+  {
+    "id": 109,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Markov Clustering (MCL)",
+    "desc_no": "Simulerer tilfeldige vandringer i grafer ved å veksle mellom ekspansjon og inflasjon."
+  },
+  {
+    "id": 110,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Label Propagation (LPA)",
+    "desc_no": "Lineærtidsalgoritme der noder oppdaterer sin merkelapp basert på naboene."
+  },
+  {
+    "id": 111,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Chinese Whispers",
+    "desc_no": "Randomisert graf-clustering for språkteknologi og store nettverk."
+  },
+  {
+    "id": 112,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Girvan-Newman",
+    "desc_no": "Divisiv grafalgoritme som fjerner kanter med høyest edge betweenness centrality."
+  },
+  {
+    "id": 113,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Infomap",
+    "desc_no": "Minimerer beskrivelseslengden (Minimum Description Length) av en tilfeldig vandring på grafen."
+  },
+  {
+    "id": 114,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Walktrap",
+    "desc_no": "Hierarkisk samfunnsdeteksjon basert på korte tilfeldige vandringer."
+  },
+  {
+    "id": 115,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Fast Greedy Modularity (CNM)",
+    "desc_no": "Clauset-Newman-Moore-algoritmen for rask modularitetsoptimering."
+  },
+  {
+    "id": 116,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Leading Eigenvector (Newman)",
+    "desc_no": "Bruker den største egenvektoren til modularitetsmatrisen for å splitte nettverk."
+  },
+  {
+    "id": 117,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Spinglass Community Detection",
+    "desc_no": "Fysikkinspirert Potts-modell som minimerer energien i et spinn-system på grafen."
+  },
+  {
+    "id": 118,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "HCS (Highly Connected Subgraphs)",
+    "desc_no": "Splitter grafer rekursivt via minimum cuts."
+  },
+  {
+    "id": 119,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "FLUIDC (Fluid Communities)",
+    "desc_no": "Simulerer ekspanderende og sammentrekkende væsker i et nettverk."
+  },
+  {
+    "id": 120,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Kernighan-Lin algoritme",
+    "desc_no": "Heuristisk grafpartisjonering som bytter nodepar mellom to delgrafer for å minimere kuttkostnad."
+  },
+  {
+    "id": 121,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "METIS",
+    "desc_no": "Flernivå-grafpartisjoneringsalgoritme (coarsening, partitioning, uncoarsening)."
+  },
+  {
+    "id": 122,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Chaco",
+    "desc_no": "Spektral og flernivå grafpartisjonering utviklet for vitenskapelige beregninger."
+  },
+  {
+    "id": 123,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Spectral Biclustering (Kluger)",
+    "desc_no": "Samtidig spektral clustering av rader og kolonner i en datamatrise."
+  },
+  {
+    "id": 124,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "OSLOM",
+    "desc_no": "Finner statistisk signifikante og overlappende klynger i komplekse nettverk."
+  },
+  {
+    "id": 125,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "BigCLAM",
+    "desc_no": "Modellbasert matrisefaktorisering for å oppdage tett overlappende samfunn i store grafer."
+  },
+  {
+    "id": 126,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "SLPA (Speaker-Listener Label Propagation)",
+    "desc_no": "Utvider LPA til å håndtere overlappende klynger i nettverk."
+  },
+  {
+    "id": 127,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "CPM (Clique Percolation Method)",
+    "desc_no": "Finner overlappende samfunn ved å rulle k-klikker gjennom grafen."
+  },
+  {
+    "id": 128,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "DEMON",
+    "desc_no": "Lokal demokratisk avstemning blant naboer for overlappende samfunnsdeteksjon."
+  },
+  {
+    "id": 129,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Fast Unfolding (Blondel)",
+    "desc_no": "Den opprinnelige flernivå-formaliseringen bak Louvain-metoden."
+  },
+  {
+    "id": 130,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "SBM (Stochastic Block Model)",
+    "desc_no": "Generativ sannsynlighetsmodell for å avdekke blokkstrukturer i grafer."
+  },
+  {
+    "id": 131,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Degree-Corrected SBM",
+    "desc_no": "Utvider SBM til å håndtere nettverk med svært skjev gradfordeling (hubs)."
+  },
+  {
+    "id": 132,
+    "cat_num": 5,
+    "cat_enum": "GraphSpectral",
+    "category": "Cat. V: Graph, Spectral & Network",
+    "name": "Power Iteration Clustering (PIC)",
+    "desc_no": "Finner en lavdimensjonal embedding via avkortet potensiterasjon på en normalisert affinitetsmatrise."
+  },
+  {
+    "id": 133,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "STING",
+    "desc_no": "Deler datarommet inn i hierarkiske rektangulære celler og lagrer statistikk per celle."
+  },
+  {
+    "id": 134,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "CLIQUE",
+    "desc_no": "Kombinerer rutenett og tetthet for å finne klynger i underrom av høydimensjonale data."
+  },
+  {
+    "id": 135,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "WaveCluster",
+    "desc_no": "Bruker wavelet-transformasjon på et rutenett for flerskala-clustering og støyfiltrering."
+  },
+  {
+    "id": 136,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "PROCLUS",
+    "desc_no": "Finner klynger sammen med et spesifikt sett av relevante dimensjoner for hver klynge."
+  },
+  {
+    "id": 137,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "SUBCLU",
+    "desc_no": "Tetthetsbasert underromsclustering som finner klynger i alle relevante projeksjoner."
+  },
+  {
+    "id": 138,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "ORCLUS",
+    "desc_no": "Utvider PROCLUS ved å tillate vilkårlig orienterte underrom."
+  },
+  {
+    "id": 139,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "DOC",
+    "desc_no": "Bruker Monte Carlo-sampling for å finne optimale projiserte klynger."
+  },
+  {
+    "id": 140,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "MAFIA",
+    "desc_no": "Utvider CLIQUE med adaptive rutenettintervaller og parallell prosessering."
+  },
+  {
+    "id": 141,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "OptiGrid",
+    "desc_no": "Konstruerer optimale rutenettpartisjoner ved å finne skjæreplan i områder med lav tetthet."
+  },
+  {
+    "id": 142,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "BANG-Clustering",
+    "desc_no": "Organiserer flerskala rutenettceller i en trestruktur for effektiv tetthetsanalyse."
+  },
+  {
+    "id": 143,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "ENCLUS",
+    "desc_no": "Underromsclustering basert på entropi-kriterier for å identifisere dimensjoner med høy struktur."
+  },
+  {
+    "id": 144,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "FINDIT",
+    "desc_no": "Underromsclustering basert på en Dimension-Oriented Distance (DOD)."
+  },
+  {
+    "id": 145,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "COSA (Clustering Objects on Subsets of Attributes)",
+    "desc_no": "Tilordner individuelle attributtvekter til hvert objekt i klyngen."
+  },
+  {
+    "id": 146,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "FIRES",
+    "desc_no": "Rask underromsclustering som slår sammen 1D-klynger til høydimensjonale klynger."
+  },
+  {
+    "id": 147,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "INSCY",
+    "desc_no": "Indekseringsbasert algoritme for å finne ikke-redundante underromsklynger."
+  },
+  {
+    "id": 148,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "P3C",
+    "desc_no": "Projeksjonsbasert clustering som bruker Poisson-fordeling til å identifisere signifikante intervaller."
+  },
+  {
+    "id": 149,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "STATPC",
+    "desc_no": "Statistisk projisert clustering som minimerer redundans mellom oppdagede underrom."
+  },
+  {
+    "id": 150,
+    "cat_num": 6,
+    "cat_enum": "GridSubspace",
+    "category": "Cat. VI: Grid, Subspace & Projection",
+    "name": "Sparse Subspace Clustering (SSC)",
+    "desc_no": "Bruker L1-optimering for å representere hvert punkt som en glissen lineærkombinasjon av andre punkter i samme underrom."
+  },
+  {
+    "id": 151,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Fuzzy C-Means (FCM)",
+    "desc_no": "Myk clustering der hvert punkt har gradvis medlemskap ([0,1]) i flere klynger."
+  },
+  {
+    "id": 152,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Possibilistic C-Means (PCM)",
+    "desc_no": "Løsner på summen-er-én-kravet i FCM for robusthet mot støy."
+  },
+  {
+    "id": 153,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Gustafson-Kessel (GK)",
+    "desc_no": "Utvider FCM med adaptiv kovariansmatrise for ellipsoide klynger."
+  },
+  {
+    "id": 154,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Gath-Geva (GG)",
+    "desc_no": "Fuzzy-algoritme basert på Gaussisk maksimum-sannsynlighetsavstand."
+  },
+  {
+    "id": 155,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Kernel Fuzzy C-Means (KFCM)",
+    "desc_no": "Kombinerer FCM med kjernemetoder for ikke-lineære datastrukturer."
+  },
+  {
+    "id": 156,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Spatial Fuzzy C-Means (sFCM)",
+    "desc_no": "Integrerer romlig naboinformasjon for bildesegmentering."
+  },
+  {
+    "id": 157,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Cheng-Church Biclustering",
+    "desc_no": "Finner delmatriser med lav mean squared residue i genekspresjonsdata."
+  },
+  {
+    "id": 158,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "PLAID",
+    "desc_no": "Additiv biclustering-modell som representerer en datamatrise som en sum av overlappende lag."
+  },
+  {
+    "id": 159,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Bimax",
+    "desc_no": "Binær biclustering-algoritme som finner alle maksimale delmatriser bestående kun av 1-ere."
+  },
+  {
+    "id": 160,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "ISA (Iterative Signature Algorithm)",
+    "desc_no": "Finner ko-regulerte biclustere via iterativ terskling av rader og kolonner."
+  },
+  {
+    "id": 161,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "FABIA",
+    "desc_no": "Faktoranalysebasert multiplikativ biclustering-modell."
+  },
+  {
+    "id": 162,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "k-Shape",
+    "desc_no": "Tidsserie-clustering som bruker normalisert krysskorrelasjon (Shape-Based Distance) som avstandsmål."
+  },
+  {
+    "id": 163,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "DBA (DTW Barycenter Averaging)",
+    "desc_no": "Beregner gjennomsnittlige tidsserier under Dynamic Time Warping for K-Means på tidsserier."
+  },
+  {
+    "id": 164,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Soft-DTW Clustering",
+    "desc_no": "Bruker en glattet, deriverbar versjon av Dynamic Time Warping for tidsserie-sentroider."
+  },
+  {
+    "id": 165,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "ROCKET-Clustering",
+    "desc_no": "Kombinerer tilfeldige konvolusjonskjerner med standard clustering for tidsserier."
+  },
+  {
+    "id": 166,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "SLIC (Simple Linear Iterative Clustering)",
+    "desc_no": "Tilpasset K-Means i 5D-rom (L,a,b,x,y) for å generere superpiksler i bilder."
+  },
+  {
+    "id": 167,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Watershed Clustering",
+    "desc_no": "Topografisk bildesegmenteringsalgoritme som behandler gråtoner som høydekart."
+  },
+  {
+    "id": 168,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "DBSCAN-3D / Euclidean Cluster Extraction",
+    "desc_no": "Spesialisert tetthetsclustering for LiDAR- og punktskydata (PCL)."
+  },
+  {
+    "id": 169,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "TRACLUS",
+    "desc_no": "Partition-and-Group-rammeverk for clustering av bevegelsesbaner (trajectories)."
+  },
+  {
+    "id": 170,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Consensus Clustering (Monti)",
+    "desc_no": "Kjører clustering gjentatte ganger på delutvalg for å måle stabilitet via konsensusmatrise."
+  },
+  {
+    "id": 171,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "CSPA (Cluster-based Similarity Partitioning)",
+    "desc_no": "Ensemble-clustering som konstruerer en hypergraf fra flere basis-clusterings."
+  },
+  {
+    "id": 172,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "HGPA (HyperGraph Partitioning Algorithm)",
+    "desc_no": "Ensemble-metode som partisjonerer en hypergraf av klyngeetiketter."
+  },
+  {
+    "id": 173,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "MCLA (Meta-CLustering Algorithm)",
+    "desc_no": "Grupperer klynger fra ulike kjøringer til metaklynger."
+  },
+  {
+    "id": 174,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Multi-View K-Means",
+    "desc_no": "Lærer vektede representasjoner på tvers av flere datavisninger (views) samtidig."
+  },
+  {
+    "id": 175,
+    "cat_num": 7,
+    "cat_enum": "FuzzyDomain",
+    "category": "Cat. VII: Fuzzy, Biclustering & Domain",
+    "name": "Co-regularized Multi-View Spectral Clustering",
+    "desc_no": "Tvinger egenvektorene fra ulike datavisninger til å være konsistente."
+  },
+  {
+    "id": 176,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "SOM (Self-Organizing Maps)",
+    "desc_no": "Topologibevarende nevralt nettverk (Kohonen-kart) for dimensjonsreduksjon og clustering."
+  },
+  {
+    "id": 177,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "Growing Neural Gas (GNG)",
+    "desc_no": "Inkrementell nevral graf som dynamisk tilpasser topologien til datamanifolden."
+  },
+  {
+    "id": 178,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "ART (Adaptive Resonance Theory)",
+    "desc_no": "Nevral arkitektur (ART1, ART2, Fuzzy ART) som unngår katastrofal glemsel."
+  },
+  {
+    "id": 179,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "Neural Gas",
+    "desc_no": "Vektorkvantiseringsnettverk som sorterer noder etter avstand til inngangsvektoren før oppdatering."
+  },
+  {
+    "id": 180,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "Growing Cell Structures (GCS)",
+    "desc_no": "Topologisk nevralt nettverk bygget av simplekser som vokser etter lokal feilrate."
+  },
+  {
+    "id": 181,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "DEC (Deep Embedded Clustering)",
+    "desc_no": "Dyp autoencoder som samtidig lærer latente representasjoner og optimerer klyngedeling."
+  },
+  {
+    "id": 182,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "IDEC (Improved DEC)",
+    "desc_no": "Bevarer rekonstruksjonstapet under trening av DEC for å hindre forvrengning av det latente rommet."
+  },
+  {
+    "id": 183,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "DCN (Deep Clustering Network)",
+    "desc_no": "Kombinerer autoencoder-rekonstruksjon direkte med K-Means-objektivet."
+  },
+  {
+    "id": 184,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "VaDE (Variational Deep Embedding)",
+    "desc_no": "Kombinerer Variational Autoencoder (VAE) med en GMM-prior i det latente rommet."
+  },
+  {
+    "id": 185,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "DEPICT",
+    "desc_no": "Dyp clustering med denoising autoencoder og balansert klyngetildeling."
+  },
+  {
+    "id": 186,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "JULE (Joint Unsupervised Learning)",
+    "desc_no": "Kombinerer agglomerativ clustering med dype konvolusjonsnettverk."
+  },
+  {
+    "id": 187,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "DAC (Deep Adaptive Clustering)",
+    "desc_no": "Omformulerer clustering som binær parvis klassifisering med adaptive terskler."
+  },
+  {
+    "id": 188,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "IIC (Invariant Information Clustering)",
+    "desc_no": "Maksimerer gjensidig informasjon (mutual information) mellom augumenterte bildepar."
+  },
+  {
+    "id": 189,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "SCAN (Semantic Clustering by Adopting Nearest neighbors)",
+    "desc_no": "To-stegs dyp clustering basert på selvveiledede nærmeste naboer."
+  },
+  {
+    "id": 190,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "SwAV (Swapping Assignments between Views)",
+    "desc_no": "Online dyp clustering som håndhever equiparition-begrensninger via Sinkhorn-Knopp."
+  },
+  {
+    "id": 191,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "DeepCluster",
+    "desc_no": "Alternerer mellom K-Means på dype features og trening av nettverket med klyngene som pseudo-etiketter."
+  },
+  {
+    "id": 192,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "Contrastive Clustering (CC)",
+    "desc_no": "Utfører kontrastiv læring på både instans- og klyngenivå samtidig."
+  },
+  {
+    "id": 193,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "CluStream",
+    "desc_no": "To-fase strømmealgoritme med online micro-clusters og offline makro-clustering."
+  },
+  {
+    "id": 194,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "DenStream",
+    "desc_no": "Tetthetsbasert strømmealgoritme som skiller mellom potensielle og avvikende mikroklynger."
+  },
+  {
+    "id": 195,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "StreamKM++",
+    "desc_no": "Strømmebasert K-Means som vedlikeholder et coreset via et tre av utvalg."
+  },
+  {
+    "id": 196,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "BIRCH-Stream / ClusTree",
+    "desc_no": "Indeksert trestruktur som tilpasser tidsvinduet til ankomsthastigheten i datastrømmen."
+  },
+  {
+    "id": 197,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "D-Stream",
+    "desc_no": "Rutenettbasert strømmealgoritme som tilordner datapunkter til celler med eksponentiell tidsnedbrytning (decay)."
+  },
+  {
+    "id": 198,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "EVO-KMeans / Genetic K-Means (GKA)",
+    "desc_no": "Bruker genetiske algoritmer med mutasjon og krysning for å unngå lokale minima."
+  },
+  {
+    "id": 199,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "PSO-Clustering (Particle Swarm Optimization)",
+    "desc_no": "Bruker svermintelligens til å optimere sentroideposisjoner i kontinuerlige rom."
+  },
+  {
+    "id": 200,
+    "cat_num": 8,
+    "cat_enum": "NeuralStream",
+    "category": "Cat. VIII: Neural, Deep, Stream & Evolutionary",
+    "name": "ACO-Clustering (Ant Colony Optimization)",
+    "desc_no": "Simulerer maurs feromonspor og sortering av objekter for å danne klynger."
+  }
+]

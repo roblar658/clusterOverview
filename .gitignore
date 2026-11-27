@@ -7,3 +7,7 @@ clusterOverview_rapport_*.pdf
 wix/out/
 *.msi
 *.wixpdb
+monograph/_vol_build/
+monograph/_qa_preview/
+**/__pycache__/
+*.pyc

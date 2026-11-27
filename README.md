@@ -174,9 +174,29 @@ cargo run --release -- --csv sample_data/iris_demo.csv --pdf rapport_iris.pdf --
 Tilgjengelige flagg:
 - `--csv <sti>` — sti til CSV-fil
 - `--pdf <sti>` — sti til PDF-rapport som skal genereres
+- `--metrics-csv <sti>` — eksporter alle 200 algoritmers evalueringsmetrikker og kjøretider til CSV
+- `--skip-pdf` — hopp over PDF-generering (nyttig sammen med `--metrics-csv` ved benchmarking)
 - `--k <tall>` — ønsket antall klynger (utelates for automatisk Silhouette-estimering)
 - `--max-samples <tall>` — maks rader i sammenlignbart utvalg (standard: `240`)
 - `--compact` — kompakt tabellrapport uten individuelle 2D-spredningsplott-kort
+
+---
+
+## IEEE-monografi: Matematiske bevis, bruksområder & sammenligninger (1 026 sider)
+
+I mappen [`monograph/`](monograph/) ligger en komplett, publikasjonsklar **IEEE Transactions to-spalters PDF-monografi** (*Created by Gemini, AI made by Google*) som dekker **samtlige 200 klyngealgoritmer** samt **14 dyptgående sammenligningskapitler**:
+
+- **Ferdig PDF**: [`monograph/ClusterOverview_200_Clustering_Algorithms_IEEE_Monograph.pdf`](monograph/ClusterOverview_200_Clustering_Algorithms_IEEE_Monograph.pdf) (**1 026 sider**, 23,5 MB, 225 klikkbare bokmerker)
+- **Omfang**:
+  - **200 algoritmekapitler** (Del I–VIII, 4–5 sider per algoritme): formell definisjon, pseudokode, 4–5 teoremer/lemmaer/proposisjoner med fullstendige bevis, kompleksitetsanalyse, 5–6 praktiske bruksområder, feilmodi og empirisk evaluering.
+  - **14 tverrgående sammenligningskapitler** (Del IX): samlet variasjonelt/geometrisk rammeverk, 16 eksakte reduksjons- og ekvivalensteoremer på tvers av familier, kategori-for-kategori head-to-head-analyser, aksiomatikk (Kleinbergs umulighetsteorem, målkoncentrasjon, breakdown point), 200-algoritmers referansematriser, 800-kjøringers empirisk multi-geometri-benchmark i Rust med 4 vektor-SVG-figurer og ingeniørhåndbok.
+  - **1 294 formelle utsagn med 1 294 komplette bevis** (**1 063 originale bevis/utledninger** + **231 klassiske siterte bevis** på tvers av **244 verifiserte IEEE BibTeX-referanser** i [`monograph/references.bib`](monograph/references.bib)).
+
+### Gjenoppbygge IEEE-monografien fra Typst-kildekode
+Forutsetter [Typst 0.15+](https://typst.app/) og Python (`pypdf`):
+```powershell
+python monograph\scripts\build_full_monograph.py
+```
 
 ### Kjøre tester
 ```powershell

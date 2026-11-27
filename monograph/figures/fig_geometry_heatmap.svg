@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="290" viewBox="0 0 720 290">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="360" y="20" text-anchor="middle" font-family="Times New Roman, serif" font-size="13" font-weight="bold" fill="#0f172a">Category Best &amp; Mean Adjusted Rand Index (ARI) vs. Ground Truth Across Diverse Geometries</text>
+<text x="264.0" y="42" text-anchor="middle" font-family="Times New Roman, serif" font-size="10.5" font-weight="bold" fill="#0f172a">Iris (Convex)</text>
+<text x="436.0" y="42" text-anchor="middle" font-family="Times New Roman, serif" font-size="10.5" font-weight="bold" fill="#0f172a">Multi-Shape (Non-Convex)</text>
+<text x="608.0" y="42" text-anchor="middle" font-family="Times New Roman, serif" font-size="10.5" font-weight="bold" fill="#0f172a">High-D Subspace+Noise</text>
+<text x="170" y="69" text-anchor="end" font-family="Times New Roman, serif" font-size="10.5" fill="#0f172a">I. Centroid/Medoid</text>
+<rect x="180" y="54" width="168" height="22" fill="rgb(58,101,220)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="264.0" y="69" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#ffffff">Mean 0.563  |  Max 0.859</text>
+<rect x="352" y="54" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="436.0" y="69" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<rect x="524" y="54" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="608.0" y="69" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<text x="170" y="95" text-anchor="end" font-family="Times New Roman, serif" font-size="10.5" fill="#0f172a">II. Density/Mode</text>
+<rect x="180" y="80" width="168" height="22" fill="rgb(120,149,230)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="264.0" y="95" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.493  |  Max 0.570</text>
+<rect x="352" y="80" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="436.0" y="95" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<rect x="524" y="80" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="608.0" y="95" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<text x="170" y="121" text-anchor="end" font-family="Times New Roman, serif" font-size="10.5" fill="#0f172a">III. Hierarchical</text>
+<rect x="180" y="106" width="168" height="22" fill="rgb(93,128,226)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="264.0" y="121" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#ffffff">Mean 0.534  |  Max 0.696</text>
+<rect x="352" y="106" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="436.0" y="121" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<rect x="524" y="106" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="608.0" y="121" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<text x="170" y="147" text-anchor="end" font-family="Times New Roman, serif" font-size="10.5" fill="#0f172a">IV. Distribution/Topic</text>
+<rect x="180" y="132" width="168" height="22" fill="rgb(39,86,217)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="264.0" y="147" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#ffffff">Mean 0.522  |  Max 0.950</text>
+<rect x="352" y="132" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="436.0" y="147" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<rect x="524" y="132" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="608.0" y="147" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<text x="170" y="173" text-anchor="end" font-family="Times New Roman, serif" font-size="10.5" fill="#0f172a">V. Graph/Spectral</text>
+<rect x="180" y="158" width="168" height="22" fill="rgb(87,123,225)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="264.0" y="173" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#ffffff">Mean 0.432  |  Max 0.725</text>
+<rect x="352" y="158" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="436.0" y="173" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<rect x="524" y="158" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="608.0" y="173" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<text x="170" y="199" text-anchor="end" font-family="Times New Roman, serif" font-size="10.5" fill="#0f172a">VI. Grid/Subspace</text>
+<rect x="180" y="184" width="168" height="22" fill="rgb(67,108,221)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="264.0" y="199" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#ffffff">Mean 0.554  |  Max 0.818</text>
+<rect x="352" y="184" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="436.0" y="199" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<rect x="524" y="184" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="608.0" y="199" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<text x="170" y="225" text-anchor="end" font-family="Times New Roman, serif" font-size="10.5" fill="#0f172a">VII. Fuzzy/Domain</text>
+<rect x="180" y="210" width="168" height="22" fill="rgb(58,101,220)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="264.0" y="225" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#ffffff">Mean 0.470  |  Max 0.859</text>
+<rect x="352" y="210" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="436.0" y="225" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<rect x="524" y="210" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="608.0" y="225" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<text x="170" y="251" text-anchor="end" font-family="Times New Roman, serif" font-size="10.5" fill="#0f172a">VIII. Neural/Stream/Evo</text>
+<rect x="180" y="236" width="168" height="22" fill="rgb(72,112,222)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="264.0" y="251" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#ffffff">Mean 0.572  |  Max 0.793</text>
+<rect x="352" y="236" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="436.0" y="251" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+<rect x="524" y="236" width="168" height="22" fill="rgb(241,245,249)" rx="3" stroke="#cbd5e1" stroke-width="0.6"/>
+<text x="608.0" y="251" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" fill="#0f172a">Mean 0.000  |  Max 0.000</text>
+</svg>

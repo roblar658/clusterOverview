@@ -1,0 +1,20 @@
+{
+  "total_pdf_pages": 1026,
+  "pdf_size_mb": 23.5,
+  "frontmatter_pages": 4,
+  "alg_chapters": 200,
+  "cmp_chapters": 14,
+  "total_source_mb": 6.3,
+  "definitions": 218,
+  "lemmas": 125,
+  "theorems": 681,
+  "propositions": 469,
+  "corollaries": 19,
+  "proofs": 1294,
+  "algorithms_pseudocode": 201,
+  "tables": 487,
+  "original_proof_badges": 1063,
+  "classical_cited_badges": 231,
+  "bookmarks_count": 225,
+  "total_formal_statements": 1294
+}
